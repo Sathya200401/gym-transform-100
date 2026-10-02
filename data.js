@@ -1166,3 +1166,10 @@ function generate100Days() {
 }
 
 const WORKOUT_DAYS = generate100Days();
+
+export { NUTRITION_DATA, EXERCISE_LIBRARY, WORKOUT_DAYS, generate100Days };
+if (typeof window !== "undefined") {
+  window.NUTRITION_DATA = NUTRITION_DATA;
+  window.EXERCISE_LIBRARY = EXERCISE_LIBRARY;
+  window.WORKOUT_DAYS = WORKOUT_DAYS;
+}

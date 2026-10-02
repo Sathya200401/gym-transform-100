@@ -1,0 +1,35 @@
+{
+  "name": "gym",
+  "version": "1.0.0",
+  "description": "A dedicated, interactive 100-day fitness application and roadmap engineered for a beginner (10 days experience, 73 kg, 5'7\"–5'8\") with access to a standard corporate gym on weekdays and no equipment on weekends/holidays.",
+  "main": "app.js",
+  "scripts": {
+    "build:js": "esbuild src/index.jsx --bundle --minify --outfile=bundle.js",
+    "build:css": "tailwindcss -i src/styles/tailwind.css -o bundle.css --minify",
+    "build": "npm run build:js && npm run build:css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sathya200401/gym-transform-100.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Sathya200401/gym-transform-100/issues"
+  },
+  "homepage": "https://github.com/Sathya200401/gym-transform-100#readme",
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "lucide-react": "^1.50.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.6.1",
+    "esbuild": "^0.28.2",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^3.4.19"
+  }
+}

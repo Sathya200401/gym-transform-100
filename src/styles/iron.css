@@ -1,0 +1,188 @@
+/* ==========================================================================
+   IRON STRENGTH & AGILITY CLUB - DESIGN SYSTEM & TOKENS
+   Direction: Iron (Powerlifting, CrossFit, MMA, Raw Strength & Athletic Agility)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,900&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* THE SIX CORE COLOR TOKENS (Change these 6 to reskin entire site) */
+  --bg: #0D0D0F;
+  --surface: #18181B;
+  --text: #F4F4F5;
+  --muted: #A1A1AA;
+  --accent: #C8FF00;
+  --on-accent: #0D0D0F;
+
+  /* DERIVED TOKENS (Iron Theme: Sharp, Raw, Industrial) */
+  --surface-hover: #222226;
+  --surface-elevated: #27272A;
+  --border: #2E2E33;
+  --border-accent: rgba(200, 255, 0, 0.35);
+  --accent-glow: rgba(200, 255, 0, 0.25);
+  --accent-dim: rgba(200, 255, 0, 0.12);
+
+  /* TYPOGRAPHY */
+  --font-heading: 'Bebas Neue', 'Barlow Condensed', -apple-system, sans-serif;
+  --font-subheading: 'Barlow Condensed', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* IRON SHAPE SPECIFICATION: Sharp corners (0–4px) */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Headings in Iron Condensed Style */
+h1, h2, h3, .font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+h4, h5, h6, .font-subheading {
+  font-family: var(--font-subheading);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Diagonal industrial section cut */
+.diagonal-cut-top {
+  clip-path: polygon(0 28px, 100% 0, 100% 100%, 0 100%);
+}
+
+.diagonal-cut-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), 0 100%);
+}
+
+.diagonal-cut-both {
+  clip-path: polygon(0 28px, 100% 0, 100% calc(100% - 28px), 0 100%);
+}
+
+/* High contrast accent overlays */
+.accent-tinted-overlay {
+  background: linear-gradient(180deg, rgba(13, 13, 15, 0.4) 0%, rgba(13, 13, 15, 0.85) 75%, var(--bg) 100%);
+}
+
+.accent-glow-card {
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: var(--radius-sm);
+}
+
+.accent-glow-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+/* Sharp iron button */
+.btn-iron-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 900;
+  padding: 14px 28px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  min-height: 48px;
+  min-width: 48px;
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-iron-primary:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 24px var(--accent);
+  transform: scale(1.02);
+}
+
+.btn-iron-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-iron-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: transparent;
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 800;
+  padding: 13px 26px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  min-height: 48px;
+  min-width: 48px;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-iron-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: var(--accent-dim);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
