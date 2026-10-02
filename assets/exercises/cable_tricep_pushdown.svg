@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="100%" height="100%" style="background:#0b1120; border-radius:12px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.2" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="100%" height="100%" fill="url(#bgGrad)" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Floor line -->
+  <line x1="30" y1="185" x2="370" y2="185" stroke="#1e293b" stroke-width="2" stroke-dasharray="4" />
+
+  <!-- Header Category & Muscle Badge -->
+  <rect x="20" y="16" width="90" height="22" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="65" y="31" fill="#94a3b8" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">ARMS</text>
+
+  <rect x="118" y="16" width="115" height="22" rx="6" fill="#f59e0b1a" stroke="#f59e0b66" stroke-width="1"/>
+  <circle cx="128" cy="27" r="4" fill="#f59e0b" />
+  <text x="175" y="31" fill="#f59e0b" font-size="10" font-weight="700" text-anchor="middle">TRICEPS HORSESHOE</text>
+
+  <!-- Specific Anatomical Artwork & Vector Scene -->
+  
+      <!-- High Pulley -->
+      <line x1="130" y1="40" x2="130" y2="185" stroke="#334155" stroke-width="6" />
+      <circle cx="130" cy="50" r="7" fill="#06b6d4" />
+
+      <!-- Standing Athlete -->
+      <circle cx="210" cy="75" r="11" fill="#94a3b8" />
+      <line x1="205" y1="88" x2="198" y2="140" stroke="#cbd5e1" stroke-width="14" stroke-linecap="round" />
+      <line x1="198" y1="140" x2="195" y2="185" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" />
+      <line x1="198" y1="140" x2="215" y2="185" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" />
+
+      <!-- Cable down to hands -->
+      <line x1="130" y1="50" x2="175" y2="115" stroke="#64748b" stroke-width="2" />
+
+      <!-- Pinned Upper Arm & Glowing Tricep -->
+      <line x1="202" y1="92" x2="195" y2="118" stroke="#cbd5e1" stroke-width="7" stroke-linecap="round" />
+      <!-- Tricep highlight -->
+      <line x1="205" y1="95" x2="198" y2="115" stroke="#f59e0b" stroke-width="5" filter="url(#glow)" />
+
+      <!-- Forearm pushing downward -->
+      <line x1="195" y1="118" x2="175" y2="145" stroke="#e2e8f0" stroke-width="5" stroke-linecap="round" />
+      <!-- Straight bar/rope -->
+      <line x1="168" y1="145" x2="182" y2="145" stroke="#64748b" stroke-width="4" stroke-linecap="round" />
+
+      <!-- Downward Arrow -->
+      <polygon points="175,160 170,152 180,152" fill="#f59e0b" />
+      <line x1="175" y1="148" x2="175" y2="158" stroke="#f59e0b" stroke-width="2" />
+    
+
+  <!-- Footer Cue Box -->
+  <rect x="18" y="196" width="364" height="32" rx="8" fill="rgba(15,23,42,0.9)" stroke="#1e293b" stroke-width="1" />
+  <text x="32" y="216" fill="#f8fafc" font-size="12" font-weight="600">🎯 Form Cue:</text>
+  <text x="110" y="216" fill="#cbd5e1" font-size="11">Pin elbows to ribs, extend fully and lock out 1 sec</text>
+</svg>

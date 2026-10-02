@@ -4,15 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>GymTransform 100 - Recomposition, Belly Fat & Agility</title>
-  <meta name="description" content="100-Day Athletic Recomposition and Agility Training System for corporate gym & room workouts.">
+  <meta name="description" content="100-Day Athletic Recomposition, Belly Fat Loss, and Agility Training System with visual exercise guides, interactive timers, and zero-equipment room toggles.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+  <!-- CONFETTI CANVAS FOR WORKOUT CELEBRATIONS -->
+  <canvas id="confetti-canvas"></canvas>
+
   <!-- MASTER APP HEADER -->
   <header class="app-header">
     <div class="header-inner">
-      <div class="brand">
+      <div class="brand" id="brand-home-btn" title="GymTransform 100 Dashboard">
         <div class="brand-icon">⚡</div>
         <div class="brand-text">
           <h1>GymTransform 100</h1>
@@ -20,21 +23,39 @@
         </div>
       </div>
 
+      <div class="header-center-info" title="Personalized Starting Baseline">
+        <span>👤 <strong>73 kg Start</strong></span>
+        <span>•</span>
+        <span>🔥 <strong>1,850 kcal Deficit</strong></span>
+        <span>•</span>
+        <span>🍗 <strong>125g Protein</strong></span>
+      </div>
+
       <div class="header-stats">
-        <div class="stat-chip streak" title="Consecutive workout streak">
-          <span>🔥</span> Streak: <span class="val" id="header-streak-count">0</span>d
+        <div class="stat-chip streak" title="Consecutive completed workout streak">
+          <span>🔥</span> <span class="val" id="header-streak-count">0</span>d Streak
         </div>
-        <div class="stat-chip" title="Total completed workouts">
-          <span>🎯</span> Completed: <span class="val" id="header-completed-count">0</span>/100
+        <div class="stat-chip completed" title="Total completed workouts">
+          <span>🎯</span> <span class="val" id="header-completed-count">0</span>/100
         </div>
+        <button class="header-action-btn" id="btn-quick-jump" title="Quick jump to any day">
+          <span>⚡</span> Jump
+        </button>
+        <button class="header-action-btn" id="header-sound-toggle" title="Toggle workout audio sound effects">
+          <span id="sound-icon">🔔</span>
+        </button>
       </div>
     </div>
 
-    <!-- 100-Day Master Progress Bar -->
+    <!-- 100-Day Master Progress Bar with Phase Milestones -->
     <div class="master-progress-wrap">
       <div class="progress-info">
-        <span id="header-phase-label">Phase 1: Foundation &amp; Posture</span>
-        <span id="header-percent-label">0% Done</span>
+        <div class="progress-phases-markers">
+          <span class="phase-marker active" data-phase="1" id="marker-p1">P1: Foundation (1–30)</span>
+          <span class="phase-marker" data-phase="2" id="marker-p2">P2: V-Taper (31–65)</span>
+          <span class="phase-marker" data-phase="3" id="marker-p3">P3: Peak Shred (66–100)</span>
+        </div>
+        <span id="header-percent-label" style="font-weight: 700; color: var(--accent-cyan-light);">0% Done</span>
       </div>
       <div class="progress-track">
         <div class="progress-bar" id="master-progress-bar" style="width: 1%;"></div>
@@ -52,10 +73,10 @@
         <span>🗺️</span> 100-Day Map
       </button>
       <button class="tab-btn" data-tab="tab-library" role="tab" aria-selected="false">
-        <span>📚</span> Form &amp; Agility Library
+        <span>📚</span> Form Library
       </button>
       <button class="tab-btn" data-tab="tab-nutrition" role="tab" aria-selected="false">
-        <span>🥑</span> Belly Fat &amp; Fuel
+        <span>🥑</span> Fuel &amp; Belly Fat
       </button>
       <button class="tab-btn" data-tab="tab-progress" role="tab" aria-selected="false">
         <span>📏</span> Waist &amp; Body Log
@@ -70,6 +91,21 @@
          VIEW 1: TODAY'S WORKOUT SCREEN
          ==================================================================== -->
     <section id="tab-today" class="tab-view active" role="tabpanel">
+
+      <!-- Week Calendar Scrubber (Mon - Sun) -->
+      <div class="week-scrubber-card" id="week-scrubber-container">
+        <div class="week-scrubber-header">
+          <span class="week-title-badge" id="scrubber-week-title">Week 1 of 15</span>
+          <div class="week-nav-arrows">
+            <button class="week-arrow-btn" id="btn-scrubber-prev-week" title="Previous Week">&larr; Prev Week</button>
+            <button class="week-arrow-btn" id="btn-scrubber-next-week" title="Next Week">Next Week &rarr;</button>
+          </div>
+        </div>
+        <div class="week-days-row" id="scrubber-days-container">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </div>
+
       <!-- Workout Day Header Card -->
       <div class="card workout-header-card">
         <div class="workout-day-selector">
@@ -80,7 +116,7 @@
           <div class="day-title-wrap" style="text-align: center;">
             <div id="badge-day-phase" class="badge phase1">Phase 1</div>
             <h2 id="today-day-title">Day 1: Upper Push, Posture &amp; Footwork</h2>
-            <p id="today-day-focus" style="font-size: 0.88rem; color: var(--text-muted);">Chest, Shoulders, Triceps</p>
+            <p id="today-day-focus" style="font-size: 0.88rem; color: var(--text-muted); font-weight: 500;">Chest, Shoulders, Triceps</p>
           </div>
 
           <button id="btn-next-day" class="day-nav-btn" aria-label="Next Day">
@@ -96,15 +132,15 @@
             <span>📍</span> Location: <strong id="today-location-type">Corporate Gym</strong>
           </div>
           <div class="meta-item">
-            <span>📅</span> Day: <strong id="today-day-name">Monday</strong>
+            <span>📅</span> Weekday: <strong id="today-day-name">Monday</strong>
           </div>
         </div>
 
         <!-- Mode Toggle Banner (Gym vs Room Routine) -->
         <div class="mode-toggle-banner">
           <div>
-            <span id="mode-status-text" style="font-weight: 700; color: var(--text-main);">🏢 Corporate Gym Routine</span>
-            <p id="mode-desc-text">On holiday or working from home today? Switch to a 0-equipment room workout!</p>
+            <div id="mode-status-text" style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">🏢 Corporate Gym Routine</div>
+            <p id="mode-desc-text">On holiday or working from home today? Convert this routine into 0-equipment room exercises!</p>
           </div>
           <button id="btn-toggle-mode" class="mode-btn">
             <span>🔄</span> Switch to Room Workout
@@ -112,14 +148,17 @@
         </div>
       </div>
 
-      <!-- Posture & Biomechanics Cue -->
+      <!-- Posture & Biomechanics Cue Banner -->
       <div class="posture-banner">
-        <strong><span>🛡️</span> Posture Alignment of the Day:</strong>
-        <p id="today-posture-tip">Retract scapulae: pull your shoulder blades down and back into your back pockets.</p>
+        <div class="posture-icon">🛡️</div>
+        <div class="posture-content">
+          <strong>Posture &amp; Pelvic Alignment of the Day:</strong>
+          <p id="today-posture-tip">Retract scapulae: pull your shoulder blades down and back into your back pockets.</p>
+        </div>
       </div>
 
       <!-- Dynamic Warm-Up Accordion -->
-      <div class="section-collapse">
+      <div class="section-collapse open" id="warmup-accordion">
         <div class="section-collapse-header" id="warmup-toggle">
           <span>🔥 Dynamic Agility Warm-Up (5–8 Mins)</span>
           <span class="accordion-arrow">▼</span>
@@ -130,38 +169,38 @@
       </div>
 
       <!-- Main Exercises Section -->
-      <div style="margin: 24px 0 12px; display: flex; justify-content: space-between; align-items: center;">
-        <h3 style="font-size: 1.15rem; font-weight: 800;">⚡ Main Workout Circuit</h3>
-        <span style="font-size: 0.8rem; color: var(--text-muted);">Check each set as you finish</span>
+      <div style="margin: 28px 0 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <h3 style="font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em;">⚡ Main Workout Circuit</h3>
+        <span style="font-size: 0.82rem; color: var(--accent-cyan-light); font-weight: 600;">Tap checkmark to log set &amp; trigger rest timer</span>
       </div>
 
       <div id="exercises-container">
-        <!-- Exercise cards generated dynamically by app.js -->
+        <!-- Exercise cards generated dynamically by app.js with images and interactive steppers -->
       </div>
 
       <!-- Cardio & Agility Finisher Card -->
       <div class="card" id="cardio-finisher-card">
         <div class="card-title">
-          <span>🏃</span> Cardio &amp; Agility Finisher
+          <span>🏃</span> Cardio &amp; Visceral Fat Finisher
         </div>
-        <h4 id="cardio-finisher-name" style="font-size: 1rem; color: var(--accent-coral); margin-bottom: 6px;">
+        <h4 id="cardio-finisher-name" style="font-size: 1.1rem; color: var(--accent-coral-light); margin-bottom: 8px;">
           Incline Treadmill Stride
         </h4>
-        <p id="cardio-finisher-protocol" style="font-size: 0.88rem; color: var(--text-main); margin-bottom: 8px;">
-          12 minutes: Incline 8-10%, Speed 4.8 km/h.
+        <p id="cardio-finisher-protocol" style="font-size: 0.9rem; color: var(--text-main); margin-bottom: 10px; line-height: 1.5;">
+          12 minutes: Incline 8-10%, Speed 4.8 km/h. Walk tall with chest high and shoulders back. No holding handrails!
         </p>
-        <p id="cardio-finisher-benefit" style="font-size: 0.8rem; color: var(--accent-emerald);">
+        <p id="cardio-finisher-benefit" style="font-size: 0.82rem; color: var(--accent-emerald-light); font-weight: 600;">
           ✓ Burns visceral belly fat without breaking down upper body muscle.
         </p>
       </div>
 
       <!-- Cooldown & Stretch Accordion -->
-      <div class="section-collapse">
+      <div class="section-collapse" id="cooldown-accordion">
         <div class="section-collapse-header" id="cooldown-toggle">
           <span>🧘 Post-Workout Recovery Stretches (5 Mins)</span>
           <span class="accordion-arrow">▼</span>
         </div>
-        <div class="drill-list" id="cooldown-list">
+        <div class="drill-list" id="cooldown-list" style="display: none;">
           <!-- Populated by JS -->
         </div>
       </div>
@@ -184,7 +223,7 @@
           <span>🗺️</span> 100-Day Transformation Roadmap
         </div>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
-          Click any day to jump directly into its workout routine. Use the filters below to view specific phases or workout types.
+          Click any day to jump directly into its routine. Filter by phase or workout location below.
         </p>
 
         <div class="roadmap-filters" id="roadmap-filter-group">
@@ -205,22 +244,22 @@
 
 
     <!-- ====================================================================
-         VIEW 3: EXERCISE & AGILITY LIBRARY
+         VIEW 3: EXERCISE & AGILITY LIBRARY (Visual Gallery)
          ==================================================================== -->
     <section id="tab-library" class="tab-view" role="tabpanel">
       <div class="card">
         <div class="card-title">
-          <span>📚</span> Technique, Form &amp; Agility Directory
+          <span>📚</span> Technique, Form &amp; Agility Gallery
         </div>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
-          Master every movement safely. Each exercise highlights how it improves posture, builds your athletic V-taper, or flattens your waistline.
+          Master every movement with high-resolution visual cues, muscle targeting, and injury-prevention cues.
         </p>
 
         <div class="library-search-bar">
-          <input type="text" id="lib-search-input" placeholder="🔍 Search exercises by name, muscle, or equipment...">
+          <input type="text" id="lib-search-input" placeholder="🔍 Search exercises by name, muscle, equipment, or posture cue...">
         </div>
 
-        <div class="library-category-filters" id="lib-category-filters">
+        <div class="library-category-filters" id="lib-category-filters" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px;">
           <button class="filter-chip active" data-cat="all">All Movements</button>
           <button class="filter-chip" data-cat="Chest">Chest</button>
           <button class="filter-chip" data-cat="Back">Back &amp; Lats</button>
@@ -232,14 +271,14 @@
         </div>
 
         <div class="exercise-lib-grid" id="lib-cards-container">
-          <!-- Populated by JS -->
+          <!-- Populated by JS with visual artwork -->
         </div>
       </div>
     </section>
 
 
     <!-- ====================================================================
-         VIEW 4: BELLY FAT & RECOMPOSITION NUTRITION
+         VIEW 4: BELLY FAT & FUEL (Nutrition & Water Tracker)
          ==================================================================== -->
     <section id="tab-nutrition" class="tab-view" role="tabpanel">
       <div class="card">
@@ -247,35 +286,49 @@
           <span>🥑</span> Recomposition &amp; Belly Fat Strategy
         </div>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
-          Tailored for a 73 kg, 5'7"–5'8" beginner. The goal is <strong>body recomposition</strong>: burning stubborn abdominal visceral fat while building lean muscle to eliminate the "skinny-fat" shape.
+          Tailored for a 73 kg beginner. The goal is <strong>body recomposition</strong>: burning stubborn abdominal visceral fat while building lean muscle to eliminate the "skinny-fat" shape.
         </p>
 
-        <!-- Macro Summary Boxes -->
+        <!-- Interactive Macro Summary Boxes -->
         <div class="macro-summary-grid">
           <div class="macro-box calories">
             <span class="badge phase3">Daily Energy Target</span>
-            <div class="macro-value">1,850</div>
+            <div class="macro-value" id="calc-calories">1,850</div>
             <div class="macro-desc">Calories / day (400 kcal healthy deficit)</div>
           </div>
           <div class="macro-box protein">
             <span class="badge phase2">Muscle &amp; Belly Cinch</span>
-            <div class="macro-value">125g</div>
+            <div class="macro-value" id="calc-protein">125g</div>
             <div class="macro-desc">Protein (1.7g / kg bodyweight)</div>
           </div>
           <div class="macro-box carbs">
             <span class="badge phase1">Agility &amp; Energy</span>
-            <div class="macro-value">190g</div>
+            <div class="macro-value" id="calc-carbs">190g</div>
             <div class="macro-desc">Clean carbs (Oats, rice, fruit, roti)</div>
           </div>
           <div class="macro-box fats">
             <span class="badge home">Hormone Health</span>
-            <div class="macro-value">55g</div>
+            <div class="macro-value" id="calc-fats">55g</div>
             <div class="macro-desc">Healthy fats (Nuts, peanut butter, olive oil)</div>
           </div>
         </div>
 
+        <!-- Interactive Daily Water Tracker -->
+        <div class="water-tracker-card">
+          <div class="water-tracker-header">
+            <div>
+              <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--accent-cyan-light);">💧 Daily Hydration Tracker (3.5L Goal)</h4>
+              <p style="font-size: 0.78rem; color: var(--text-muted);">Tap a glass each time you drink 350ml water. Essential for metabolism &amp; water retention flush.</p>
+            </div>
+            <button id="btn-reset-water" class="filter-chip" style="font-size: 0.75rem;">Reset Today</button>
+          </div>
+          <div class="water-glasses-row" id="water-glasses-container">
+            <!-- 10 Glasses rendered dynamically -->
+          </div>
+        </div>
+
         <!-- 5 Truths About Belly Fat & Skinny Fat -->
-        <h3 style="font-size: 1.1rem; font-weight: 700; margin: 24px 0 12px;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; margin: 26px 0 14px;">
           💡 5 Scientific Truths: Why Your Belly Stays &amp; How We Fix It
         </h3>
         <div class="belly-fat-insight-list" id="belly-fat-insights">
@@ -283,7 +336,7 @@
         </div>
 
         <!-- High-Protein Grocery Checklist -->
-        <h3 style="font-size: 1.1rem; font-weight: 700; margin: 28px 0 12px;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; margin: 30px 0 14px;">
           🛒 High-Protein Recomposition Foods (Veg &amp; Non-Veg)
         </h3>
         <div style="overflow-x: auto;">
@@ -335,11 +388,11 @@
                 <input type="number" id="log-waist" step="0.25" placeholder="e.g. 34.5" required>
               </div>
               <div class="form-group">
-                <label for="log-notes">Energy / Agility (1-10)</label>
+                <label for="log-notes">Energy Rating (1-10)</label>
                 <input type="number" id="log-notes" min="1" max="10" placeholder="e.g. 8">
               </div>
             </div>
-            <button type="submit" class="btn-primary">+ Save Measurement Log</button>
+            <button type="submit" class="btn-primary" style="width: 100%;">+ Save Measurement Entry</button>
           </form>
         </div>
 
@@ -353,9 +406,9 @@
               <!-- Rendered dynamically by app.js -->
             </svg>
           </div>
-          <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.78rem;">
-            <span style="color: var(--accent-coral);">● Waist Line (Inches)</span>
-            <span style="color: var(--accent-cyan);">● Weight Line (kg)</span>
+          <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.78rem; font-weight: 600;">
+            <span style="color: var(--accent-coral-light);">● Waist Circumference (Inches at Navel)</span>
+            <span style="color: var(--accent-cyan-light);">● Scale Weight (kg)</span>
           </div>
         </div>
       </div>
@@ -363,7 +416,7 @@
       <!-- History Table & Backup Actions -->
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
-          <h3 style="font-size: 1.1rem; font-weight: 700;">📜 Measurement History</h3>
+          <h3 style="font-size: 1.15rem; font-weight: 800;">📜 Measurement History</h3>
           <div style="display: flex; gap: 8px;">
             <button id="btn-export-data" class="day-nav-btn" title="Export your data as JSON">💾 Export Backup</button>
             <button id="btn-print-summary" class="day-nav-btn" title="Print this workout plan">🖨️ Print View</button>
@@ -377,7 +430,7 @@
                 <th>Date</th>
                 <th>Weight (kg)</th>
                 <th>Waist (Inches)</th>
-                <th>Agility Rating</th>
+                <th>Energy Rating</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -392,10 +445,14 @@
   </main>
 
   <!-- ======================================================================
-       STICKY FLOATING REST TIMER (For Gym Use)
+       STICKY FLOATING REST TIMER HUD (Dynamic Island Workout HUD)
        ====================================================================== -->
   <aside class="floating-rest-timer" id="rest-timer-widget" aria-label="Rest Timer">
     <div class="timer-circle-wrap">
+      <svg class="timer-progress-ring" width="64" height="64">
+        <circle stroke="#1e293b" stroke-width="4" fill="transparent" r="28" cx="32" cy="32"/>
+        <circle id="timer-progress-circle" stroke="var(--accent-coral)" stroke-width="4" stroke-linecap="round" fill="transparent" r="28" cx="32" cy="32" stroke-dasharray="175.9" stroke-dashoffset="0"/>
+      </svg>
       <div class="timer-digits" id="timer-display">00:60</div>
     </div>
     <div class="timer-controls">
@@ -404,17 +461,18 @@
         <button class="btn-timer-preset" data-sec="60">60s</button>
         <button class="btn-timer-preset" data-sec="90">90s</button>
         <button class="btn-timer-preset" data-sec="120">2m</button>
+        <button class="btn-timer-preset" id="btn-timer-add15" title="Add 15 seconds">+15s</button>
       </div>
       <div class="timer-action-row">
-        <button id="btn-timer-start" class="btn-timer-action" style="color: var(--accent-emerald); font-weight: 700;">▶ Start</button>
+        <button id="btn-timer-start" class="btn-timer-action" style="color: var(--accent-emerald-light); font-weight: 800;">▶ Start</button>
         <button id="btn-timer-reset" class="btn-timer-action">↺ Reset</button>
-        <button id="btn-timer-sound" class="btn-timer-action" title="Toggle audio chime">🔔 Sound On</button>
+        <button id="btn-timer-skip" class="btn-timer-action" title="Skip rest">⏭ Skip</button>
       </div>
     </div>
   </aside>
 
   <!-- ======================================================================
-       EXERCISE FORM & TECHNIQUE DIALOG MODAL
+       EXERCISE FORM & TECHNIQUE DIALOG MODAL (With Workout Image)
        ====================================================================== -->
   <dialog id="exercise-modal" aria-labelledby="modal-exercise-name">
     <div class="modal-header">
@@ -425,12 +483,17 @@
       <button class="btn-close-modal" id="btn-close-modal" aria-label="Close dialog">&times;</button>
     </div>
     <div class="modal-body">
+      <!-- High Resolution Exercise Illustration -->
+      <div class="modal-img-container" id="modal-img-container">
+        <img id="modal-exercise-image" src="" alt="Workout technique illustration">
+      </div>
+
       <div class="modal-tip-box" id="modal-posture-box">
         <strong>🛡️ Posture &amp; Recomposition Impact:</strong>
         <p id="modal-posture-benefit">Opens up rounded shoulders and stretches anterior chest.</p>
       </div>
 
-      <h4 style="font-size: 0.95rem; font-weight: 700; margin-top: 14px;">Step-by-Step Form Cues:</h4>
+      <h4 style="font-size: 0.95rem; font-weight: 800; margin-top: 14px;">Step-by-Step Form Cues:</h4>
       <ol class="modal-step-list" id="modal-step-list">
         <!-- Populated by JS -->
       </ol>
@@ -444,6 +507,70 @@
         <strong>⚠️ Beginner Mistake to Avoid:</strong>
         <p id="modal-mistake">Flaring elbows outward at 90 degrees.</p>
       </div>
+
+      <div style="margin-top: 16px; text-align: center;">
+        <button class="btn-primary" id="btn-modal-practice-timer">
+          ⏱️ Practice 30s Form Drill
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ======================================================================
+       QUICK DAY JUMPER MODAL
+       ====================================================================== -->
+  <dialog id="jump-modal" aria-labelledby="jump-modal-title">
+    <div class="modal-header">
+      <h3 id="jump-modal-title">⚡ Jump to Any Workout Day</h3>
+      <button class="btn-close-modal" id="btn-close-jump-modal">&times;</button>
+    </div>
+    <div class="modal-body" style="text-align: center;">
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
+        Enter day number (1 to 100) or pick a phase milestone:
+      </p>
+      <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 16px;">
+        <button class="filter-chip" onclick="window.jumpToDay(1)">Day 1</button>
+        <button class="filter-chip" onclick="window.jumpToDay(31)">Day 31 (Phase 2)</button>
+        <button class="filter-chip" onclick="window.jumpToDay(66)">Day 66 (Phase 3)</button>
+        <button class="filter-chip" onclick="window.jumpToDay(100)">Day 100</button>
+      </div>
+      <div style="display: flex; gap: 10px; max-width: 280px; margin: 0 auto;">
+        <input type="number" id="jump-day-input" min="1" max="100" placeholder="Day (1-100)" 
+               style="width: 100%; padding: 10px; background: #111a2d; border: 1px solid var(--border-color); color: #fff; border-radius: var(--radius-md); text-align: center; font-size: 1.1rem; font-weight: 700;">
+        <button class="btn-primary" id="btn-confirm-jump">Go</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ======================================================================
+       CELEBRATION COMPLETION MODAL
+       ====================================================================== -->
+  <dialog id="celebration-modal" aria-labelledby="celebration-title">
+    <div class="modal-header" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.1));">
+      <h3 id="celebration-title" style="color: var(--accent-emerald-light);">🎉 Day Crushed!</h3>
+      <button class="btn-close-modal" id="btn-close-celebration-modal">&times;</button>
+    </div>
+    <div class="modal-body" style="text-align: center; padding: 28px 24px;">
+      <div style="font-size: 3rem; margin-bottom: 10px;">🏆</div>
+      <h2 id="celebration-heading" style="font-size: 1.5rem; font-weight: 900; margin-bottom: 8px;">Day 1 Completed!</h2>
+      <p id="celebration-subtitle" style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 20px;">
+        Outstanding work! Another step closer to athletic recomposition, a tight waist, and high springiness.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
+        <div style="background: #111a2d; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-md);">
+          <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">WORKOUT STREAK</div>
+          <div id="celebration-streak-val" style="font-size: 1.5rem; font-weight: 900; color: var(--accent-amber-light); margin-top: 4px;">1 Day</div>
+        </div>
+        <div style="background: #111a2d; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-md);">
+          <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">EST. CALORIES BURNED</div>
+          <div style="font-size: 1.5rem; font-weight: 900; color: var(--accent-emerald-light); margin-top: 4px;">~380 kcal</div>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-celebration-next-day" style="width: 100%; padding: 14px;">
+        Advance to Next Workout &rarr;
+      </button>
     </div>
   </dialog>
 

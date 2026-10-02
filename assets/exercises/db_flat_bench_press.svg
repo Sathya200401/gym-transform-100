@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="100%" height="100%" style="background:#0b1120; border-radius:12px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.2" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="100%" height="100%" fill="url(#bgGrad)" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Floor line -->
+  <line x1="30" y1="185" x2="370" y2="185" stroke="#1e293b" stroke-width="2" stroke-dasharray="4" />
+
+  <!-- Header Category & Muscle Badge -->
+  <rect x="20" y="16" width="90" height="22" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="65" y="31" fill="#94a3b8" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">CHEST</text>
+
+  <rect x="118" y="16" width="115" height="22" rx="6" fill="#f43f5e1a" stroke="#f43f5e66" stroke-width="1"/>
+  <circle cx="128" cy="27" r="4" fill="#f43f5e" />
+  <text x="175" y="31" fill="#f43f5e" font-size="10" font-weight="700" text-anchor="middle">CHEST / PECS</text>
+
+  <!-- Specific Anatomical Artwork & Vector Scene -->
+  
+      <!-- Flat Bench -->
+      <rect x="120" y="145" width="160" height="14" rx="4" fill="#334155" />
+      <rect x="135" y="159" width="12" height="26" fill="#1e293b" />
+      <rect x="253" y="159" width="12" height="26" fill="#1e293b" />
+
+      <!-- Athlete lying down -->
+      <!-- Head -->
+      <circle cx="140" cy="138" r="11" fill="#94a3b8" />
+      <!-- Torso -->
+      <rect x="153" y="136" width="75" height="18" rx="6" fill="#cbd5e1" />
+      <!-- Chest Muscle Highlight (Active) -->
+      <path d="M 165 136 Q 185 130 205 136 Q 185 142 165 136 Z" fill="#f43f5e" filter="url(#glow)" />
+      <!-- Legs bent to floor -->
+      <path d="M 228 142 L 255 148 L 265 185" fill="none" stroke="#94a3b8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+
+      <!-- Left Arm & Dumbbell -->
+      <path d="M 175 136 L 165 110 L 165 85" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round" />
+      <rect x="155" y="80" width="20" height="6" rx="2" fill="#64748b" />
+      <circle cx="155" cy="83" r="7" fill="#06b6d4" />
+      <circle cx="175" cy="83" r="7" fill="#06b6d4" />
+
+      <!-- Right Arm & Dumbbell -->
+      <path d="M 195 136 L 205 110 L 205 85" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round" />
+      <rect x="195" y="80" width="20" height="6" rx="2" fill="#64748b" />
+      <circle cx="195" cy="83" r="7" fill="#06b6d4" />
+      <circle cx="215" cy="83" r="7" fill="#06b6d4" />
+
+      <!-- Motion Arrows Up -->
+      <path d="M 165 105 L 165 92" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)" />
+      <path d="M 205 105 L 205 92" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)" />
+      <polygon points="165,88 161,96 169,96" fill="#f43f5e" />
+      <polygon points="205,88 201,96 209,96" fill="#f43f5e" />
+    
+
+  <!-- Footer Cue Box -->
+  <rect x="18" y="196" width="364" height="32" rx="8" fill="rgba(15,23,42,0.9)" stroke="#1e293b" stroke-width="1" />
+  <text x="32" y="216" fill="#f8fafc" font-size="12" font-weight="600">🎯 Form Cue:</text>
+  <text x="110" y="216" fill="#cbd5e1" font-size="11">Elbows tucked 45°, squeeze chest at the top</text>
+</svg>

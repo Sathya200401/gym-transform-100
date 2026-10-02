@@ -97,6 +97,7 @@ const NUTRITION_DATA = {
 const EXERCISE_LIBRARY = {
   // PUSH / CHEST & SHOULDERS
   "db_flat_bench_press": {
+    image: "assets/exercises/db_flat_bench_press.svg",
     name: "Dumbbell Flat Bench Press",
     category: "Chest",
     equipment: "Dumbbells, Flat Bench",
@@ -113,6 +114,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Flaring elbows straight out at 90°, which impinges the rotator cuff and strains shoulders."
   },
   "db_incline_bench_press": {
+    image: "assets/exercises/db_incline_bench_press.svg",
     name: "Dumbbell Incline Bench Press",
     category: "Chest",
     equipment: "Dumbbells, Incline Bench (30-45°)",
@@ -129,6 +131,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Bouncing weights or arching lower back excessively off the incline seat."
   },
   "cable_chest_fly": {
+    image: "assets/exercises/cable_chest_fly.svg",
     name: "Cable Standing Chest Fly",
     category: "Chest",
     equipment: "Cable Crossover Tower",
@@ -145,6 +148,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Bending and straightening elbows like a press instead of keeping arms in a locked fly arc."
   },
   "db_seated_shoulder_press": {
+    image: "assets/exercises/db_seated_shoulder_press.svg",
     name: "Dumbbell Seated Shoulder Press",
     category: "Shoulders",
     equipment: "Dumbbells, Adjustable Bench (75-85°)",
@@ -161,6 +165,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Over-arching the lower back to turn it into an incline chest press."
   },
   "db_lateral_raise": {
+    image: "assets/exercises/db_lateral_raise.svg",
     name: "Dumbbell Lateral Raise",
     category: "Shoulders",
     equipment: "Light Dumbbells",
@@ -177,6 +182,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Shrugging the neck and traps up to yank heavy weights."
   },
   "cable_face_pull": {
+    image: "assets/exercises/cable_face_pull.svg",
     name: "Cable Face Pull (Crucial Posture Fix)",
     category: "Back / Shoulders",
     equipment: "Cable Machine, Rope Attachment",
@@ -193,6 +199,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Pulling down to the chin with elbows low, missing the external rotation."
   },
   "cable_tricep_pushdown": {
+    image: "assets/exercises/cable_tricep_pushdown.svg",
     name: "Cable Tricep Pushdown",
     category: "Arms",
     equipment: "Cable Machine, Rope or Straight Bar",
@@ -209,6 +216,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Swinging elbows back and forth and using bodyweight momentum."
   },
   "db_overhead_tricep_extension": {
+    image: "assets/exercises/db_overhead_tricep_extension.svg",
     name: "Dumbbell Overhead Tricep Extension",
     category: "Arms",
     equipment: "Single Dumbbell, Bench",
@@ -227,6 +235,7 @@ const EXERCISE_LIBRARY = {
 
   // PULL / BACK & BICEPS
   "lat_pulldown": {
+    image: "assets/exercises/lat_pulldown.svg",
     name: "Wide-Grip Lat Pulldown",
     category: "Back",
     equipment: "Lat Pulldown Machine",
@@ -243,6 +252,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Swinging torso backward drastically to yank heavy weight down."
   },
   "seated_cable_row": {
+    image: "assets/exercises/seated_cable_row.svg",
     name: "Seated Cable Row (Close-Grip)",
     category: "Back",
     equipment: "Low Cable Row Station, V-Bar",
@@ -259,6 +269,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Leaning way forward and rounding the lower back under tension."
   },
   "db_single_arm_row": {
+    image: "assets/exercises/db_single_arm_row.svg",
     name: "Dumbbell Single-Arm Row",
     category: "Back",
     equipment: "Dumbbell, Flat Bench",
@@ -275,6 +286,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Twisting the torso wildly at the top to cheat the weight up."
   },
   "db_bicep_curl": {
+    image: "assets/exercises/db_bicep_curl.svg",
     name: "Dumbbell Incline or Standing Bicep Curl",
     category: "Arms",
     equipment: "Dumbbells",
@@ -291,6 +303,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Swinging hips and shoulders to launch weights."
   },
   "hammer_curl": {
+    image: "assets/exercises/hammer_curl.svg",
     name: "Dumbbell Hammer Curl",
     category: "Arms",
     equipment: "Dumbbells",
@@ -308,6 +321,7 @@ const EXERCISE_LIBRARY = {
 
   // LEGS / POSTURE & LOWER BODY
   "goblet_squat": {
+    image: "assets/exercises/goblet_squat.svg",
     name: "Dumbbell Goblet Squat",
     category: "Legs",
     equipment: "Single Dumbbell",
@@ -324,6 +338,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Letting heels peel off floor or collapsing chest forward."
   },
   "db_romanian_deadlift": {
+    image: "assets/exercises/db_romanian_deadlift.svg",
     name: "Dumbbell Romanian Deadlift (RDL)",
     category: "Legs / Posture",
     equipment: "Dumbbells",
@@ -341,6 +356,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Rounding the lower back or squatting down with the knees."
   },
   "leg_press": {
+    image: "assets/exercises/leg_press.svg",
     name: "Leg Press (Machine)",
     category: "Legs",
     equipment: "Leg Press Machine",
@@ -357,6 +373,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Hyperextending and violently snapping knees straight at top."
   },
   "walking_lunges": {
+    image: "assets/exercises/walking_lunges.svg",
     name: "Walking Dumbbell Lunges",
     category: "Legs / Agility",
     equipment: "Bodyweight or Light Dumbbells",
@@ -373,6 +390,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Letting front knee slam inward or torso lean lazily onto front thigh."
   },
   "standing_calf_raise": {
+    image: "assets/exercises/standing_calf_raise.svg",
     name: "Standing Dumbbell / Machine Calf Raise",
     category: "Legs",
     equipment: "Dumbbells or Machine, Step Platform",
@@ -390,6 +408,7 @@ const EXERCISE_LIBRARY = {
 
   // CORE & BELLY-FAT CINCHING
   "deadbug": {
+    image: "assets/exercises/deadbug.svg",
     name: "Deadbug (Transverse Abdominis Activator)",
     category: "Core",
     equipment: "Bodyweight / Mat",
@@ -406,6 +425,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Allowing lower back to arch off the floor, which disengages core and strains spine."
   },
   "forearm_plank": {
+    image: "assets/exercises/forearm_plank.svg",
     name: "Active Forearm Plank",
     category: "Core",
     equipment: "Bodyweight / Mat",
@@ -422,6 +442,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Sagging lower back or hiking hips in a triangle."
   },
   "hanging_knee_raise": {
+    image: "assets/exercises/hanging_knee_raise.svg",
     name: "Captain's Chair / Hanging Knee Raise",
     category: "Core",
     equipment: "Captain's Chair or Pull-up Bar",
@@ -438,6 +459,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Using pendulum momentum to swing legs up."
   },
   "cable_woodchopper": {
+    image: "assets/exercises/cable_woodchopper.svg",
     name: "Cable Rotational Woodchopper",
     category: "Core / Agility",
     equipment: "Cable Machine, D-Handle",
@@ -454,6 +476,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Bending arms and pulling like a row."
   },
   "farmers_walk": {
+    image: "assets/exercises/farmers_walk.svg",
     name: "Dumbbell Farmer's Walk",
     category: "Full Body / Core / Agility",
     equipment: "Pair of Moderate/Heavy Dumbbells",
@@ -472,6 +495,7 @@ const EXERCISE_LIBRARY = {
 
   // AGILITY & ROOM (NO-EQUIPMENT) DRILLS
   "skater_hops": {
+    image: "assets/exercises/skater_hops.svg",
     name: "Lateral Skater Hops (Agility & Glute Burn)",
     category: "Agility / Home",
     equipment: "Zero Equipment (Room)",
@@ -488,6 +512,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Stiff-legged heavy landings."
   },
   "fast_feet_shadow": {
+    image: "assets/exercises/fast_feet_shadow.svg",
     name: "Fast-Feet Agility Drills (Room Speed Ladder)",
     category: "Agility / Home",
     equipment: "Zero Equipment (Room)",
@@ -504,6 +529,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Landing flat-footed on heels."
   },
   "pushup_standard": {
+    image: "assets/exercises/pushup_standard.svg",
     name: "Standard Push-Up (or Incline Desk Push-Up)",
     category: "Chest / Core / Home",
     equipment: "Zero Equipment (Room/Bed/Desk)",
@@ -520,6 +546,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Sagging hips or poking neck down toward floor."
   },
   "glute_bridge": {
+    image: "assets/exercises/glute_bridge.svg",
     name: "Glute Bridge & Hold",
     category: "Glutes / Posture / Home",
     equipment: "Zero Equipment (Room)",
@@ -536,6 +563,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Hyperextending the lower back instead of hinging from hips."
   },
   "mountain_climber": {
+    image: "assets/exercises/mountain_climber.svg",
     name: "Athletic Mountain Climbers",
     category: "Core / Agility / Home",
     equipment: "Zero Equipment (Room)",
@@ -552,6 +580,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Hips floating up in a pike."
   },
   "air_squat_reach": {
+    image: "assets/exercises/air_squat_reach.svg",
     name: "Bodyweight Squat to Overhead Reach",
     category: "Legs / Posture / Home",
     equipment: "Zero Equipment (Room)",
@@ -568,6 +597,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Rounding shoulders forward."
   },
   "bear_crawl_hold": {
+    image: "assets/exercises/bear_crawl_hold.svg",
     name: "Bear Crawl Hover & Hold",
     category: "Core / Agility / Home",
     equipment: "Zero Equipment (Room)",

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="100%" height="100%" style="background:#0b1120; border-radius:12px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0.2" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="100%" height="100%" fill="url(#bgGrad)" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Floor line -->
+  <line x1="30" y1="185" x2="370" y2="185" stroke="#1e293b" stroke-width="2" stroke-dasharray="4" />
+
+  <!-- Header Category & Muscle Badge -->
+  <rect x="20" y="16" width="90" height="22" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="65" y="31" fill="#94a3b8" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">SHOULDERS</text>
+
+  <rect x="118" y="16" width="115" height="22" rx="6" fill="#a855f71a" stroke="#a855f766" stroke-width="1"/>
+  <circle cx="128" cy="27" r="4" fill="#a855f7" />
+  <text x="175" y="31" fill="#a855f7" font-size="10" font-weight="700" text-anchor="middle">SIDE / LATERAL DELTS</text>
+
+  <!-- Specific Anatomical Artwork & Vector Scene -->
+  
+      <!-- Standing Athlete -->
+      <circle cx="200" cy="70" r="11" fill="#94a3b8" />
+      <rect x="190" y="83" width="20" height="52" rx="6" fill="#cbd5e1" />
+      <!-- Side delts glowing -->
+      <circle cx="186" cy="88" r="7" fill="#a855f7" filter="url(#glow)" />
+      <circle cx="214" cy="88" r="7" fill="#a855f7" filter="url(#glow)" />
+      <!-- Legs -->
+      <line x1="195" y1="135" x2="190" y2="185" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" />
+      <line x1="205" y1="135" x2="210" y2="185" stroke="#94a3b8" stroke-width="7" stroke-linecap="round" />
+
+      <!-- Arms raised to shoulder level -->
+      <path d="M 186 88 Q 145 92 120 95" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-linecap="round" />
+      <circle cx="115" cy="97" r="6" fill="#06b6d4" />
+      <circle cx="125" cy="97" r="6" fill="#06b6d4" />
+
+      <path d="M 214 88 Q 255 92 280 95" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-linecap="round" />
+      <circle cx="275" cy="97" r="6" fill="#06b6d4" />
+      <circle cx="285" cy="97" r="6" fill="#06b6d4" />
+
+      <!-- Motion Arc Arrows -->
+      <path d="M 140 140 Q 125 120 125 105" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="3" />
+      <polygon points="125,100 120,108 130,108" fill="#a855f7" />
+      <path d="M 260 140 Q 275 120 275 105" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="3" />
+      <polygon points="275,100 270,108 280,108" fill="#a855f7" />
+    
+
+  <!-- Footer Cue Box -->
+  <rect x="18" y="196" width="364" height="32" rx="8" fill="rgba(15,23,42,0.9)" stroke="#1e293b" stroke-width="1" />
+  <text x="32" y="216" fill="#f8fafc" font-size="12" font-weight="600">🎯 Form Cue:</text>
+  <text x="110" y="216" fill="#cbd5e1" font-size="11">Lead with elbows, pour like a pitcher, V-Taper width</text>
+</svg>

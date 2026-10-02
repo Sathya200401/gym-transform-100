@@ -1,10 +1,12 @@
 /**
- * GymTransform 100 - Main Application Logic
- * State management, rest timer, interactive set tracking, 
- * waist/weight SVG charting, and modal interactions.
+ * GymTransform 100 - Master Application Logic
+ * High-Energy 10/10 UX • Interactive Stepper Logging • Visual Exercise Gallery
+ * Dynamic Island Rest Timer HUD • Confetti Celebrations • Recomposition Tracking
  */
 
-// Global State
+// ============================================================================
+// GLOBAL STATE & STORAGE
+// ============================================================================
 const STATE_KEY = "gymtransform_100_state";
 
 const defaultState = {
@@ -12,13 +14,15 @@ const defaultState = {
   completedDays: [], // array of day numbers [1, 2, ...]
   modeOverrides: {}, // { dayNumber: 'gym' | 'room' }
   loggedSets: {},    // { "day_exId_setIdx": { checked: true, weight: "10", reps: "12" } }
+  waterGlasses: 0,   // Number of 350ml glasses logged today (0-10)
+  waterDate: new Date().toISOString().split("T")[0],
   measurements: [
     {
       id: "baseline",
       date: new Date().toISOString().split("T")[0],
       weight: 73.0,
       waist: 35.0,
-      energy: 7
+      energy: 8
     }
   ]
 };
@@ -46,8 +50,15 @@ function saveState() {
   }
 }
 
+// Reset water count if new day
+if (appState.waterDate !== new Date().toISOString().split("T")[0]) {
+  appState.waterGlasses = 0;
+  appState.waterDate = new Date().toISOString().split("T")[0];
+  saveState();
+}
+
 // ============================================================================
-// AUDIO SYNTHESIZER (Web Audio API - Zero External Files)
+// AUDIO SYNTHESIZER (Web Audio API - Zero External Dependencies)
 // ============================================================================
 let audioCtx = null;
 let soundEnabled = true;
@@ -61,7 +72,7 @@ function initAudio() {
   }
 }
 
-function playTimerChime() {
+function playSound(type) {
   if (!soundEnabled) return;
   try {
     initAudio();
@@ -72,36 +83,103 @@ function playTimerChime() {
 
     const now = audioCtx.currentTime;
 
-    // Beep 1
-    const osc1 = audioCtx.createOscillator();
-    const gain1 = audioCtx.createGain();
-    osc1.type = "sine";
-    osc1.frequency.setValueAtTime(880, now); // A5 note
-    gain1.gain.setValueAtTime(0.3, now);
-    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-    osc1.connect(gain1);
-    gain1.connect(audioCtx.destination);
-    osc1.start(now);
-    osc1.stop(now + 0.35);
+    if (type === "click") {
+      // Crisp click for set completion
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(800, now);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.1);
+    } 
+    else if (type === "warning") {
+      // 3-2-1 countdown tick
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(600, now);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.15);
+    }
+    else if (type === "timerFinish") {
+      // Rest timer completion dual chime
+      const osc1 = audioCtx.createOscillator();
+      const gain1 = audioCtx.createGain();
+      osc1.type = "sine";
+      osc1.frequency.setValueAtTime(880, now); // A5
+      gain1.gain.setValueAtTime(0.3, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      osc1.connect(gain1);
+      gain1.connect(audioCtx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.35);
 
-    // Beep 2 (Higher pitch finish)
-    const osc2 = audioCtx.createOscillator();
-    const gain2 = audioCtx.createGain();
-    osc2.type = "sine";
-    osc2.frequency.setValueAtTime(1320, now + 0.18); // E6 note
-    gain2.gain.setValueAtTime(0.35, now + 0.18);
-    gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
-    osc2.connect(gain2);
-    gain2.connect(audioCtx.destination);
-    osc2.start(now + 0.18);
-    osc2.stop(now + 0.7);
+      const osc2 = audioCtx.createOscillator();
+      const gain2 = audioCtx.createGain();
+      osc2.type = "sine";
+      osc2.frequency.setValueAtTime(1320, now + 0.18); // E6
+      gain2.gain.setValueAtTime(0.35, now + 0.18);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+      osc2.connect(gain2);
+      gain2.connect(audioCtx.destination);
+      osc2.start(now + 0.18);
+      osc2.stop(now + 0.7);
+    }
+    else if (type === "celebrate") {
+      // Triumphant Fanfare for workout finish
+      [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, now + i * 0.12);
+        gain.gain.setValueAtTime(0.3, now + i * 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.6);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now + i * 0.12);
+        osc.stop(now + i * 0.12 + 0.6);
+      });
+    }
+    else if (type === "water") {
+      // Gentle water droplet bubble
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(450, now);
+      osc.frequency.exponentialRampToValueAtTime(900, now + 0.15);
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.2);
+    }
   } catch (err) {
-    console.warn("Web Audio chime could not play:", err);
+    console.warn("Audio chime could not play:", err);
   }
 }
 
+// Sound toggle listeners
+const soundToggleBtn = document.getElementById("header-sound-toggle");
+const soundIcon = document.getElementById("sound-icon");
+if (soundToggleBtn) {
+  soundToggleBtn.addEventListener("click", () => {
+    soundEnabled = !soundEnabled;
+    if (soundIcon) soundIcon.textContent = soundEnabled ? "🔔" : "🔕";
+    soundToggleBtn.title = soundEnabled ? "Sound enabled" : "Sound muted";
+  });
+}
+
 // ============================================================================
-// REST TIMER LOGIC
+// DYNAMIC REST TIMER HUD
 // ============================================================================
 let timerDurationSec = 60;
 let timerRemainingSec = 60;
@@ -109,9 +187,14 @@ let timerInterval = null;
 let isTimerRunning = false;
 
 const timerDisplay = document.getElementById("timer-display");
+const timerProgressCircle = document.getElementById("timer-progress-circle");
 const btnTimerStart = document.getElementById("btn-timer-start");
 const btnTimerReset = document.getElementById("btn-timer-reset");
-const btnTimerSound = document.getElementById("btn-timer-sound");
+const btnTimerSkip = document.getElementById("btn-timer-skip");
+const btnTimerAdd15 = document.getElementById("btn-timer-add15");
+const restTimerWidget = document.getElementById("rest-timer-widget");
+
+const CIRCUMFERENCE = 2 * Math.PI * 28; // r=28 -> 175.93
 
 function formatSeconds(sec) {
   const m = Math.floor(sec / 60);
@@ -122,12 +205,20 @@ function formatSeconds(sec) {
 function updateTimerDisplay() {
   if (timerDisplay) {
     timerDisplay.textContent = formatSeconds(timerRemainingSec);
+  }
+
+  // Update SVG progress ring
+  if (timerProgressCircle) {
+    const fraction = timerDurationSec > 0 ? timerRemainingSec / timerDurationSec : 0;
+    const offset = CIRCUMFERENCE * (1 - fraction);
+    timerProgressCircle.style.strokeDashoffset = offset;
+    
     if (timerRemainingSec <= 5 && timerRemainingSec > 0) {
-      timerDisplay.style.color = "var(--accent-coral)";
-    } else if (timerRemainingSec === 0) {
-      timerDisplay.style.color = "var(--accent-emerald)";
+      timerProgressCircle.style.stroke = "var(--accent-coral)";
+      if (timerDisplay) timerDisplay.style.color = "var(--accent-coral-light)";
     } else {
-      timerDisplay.style.color = "var(--accent-coral)";
+      timerProgressCircle.style.stroke = "var(--accent-cyan)";
+      if (timerDisplay) timerDisplay.style.color = "var(--accent-cyan-light)";
     }
   }
 }
@@ -143,7 +234,7 @@ function startTimer(duration) {
   isTimerRunning = true;
   if (btnTimerStart) {
     btnTimerStart.textContent = "⏸ Pause";
-    btnTimerStart.style.color = "var(--accent-amber)";
+    btnTimerStart.style.color = "var(--accent-amber-light)";
   }
 
   updateTimerDisplay();
@@ -152,15 +243,20 @@ function startTimer(duration) {
     if (timerRemainingSec > 0) {
       timerRemainingSec--;
       updateTimerDisplay();
+
+      // Audio tick at 3, 2, 1
+      if (timerRemainingSec <= 3 && timerRemainingSec > 0) {
+        playSound("warning");
+      }
+
       if (timerRemainingSec === 0) {
         clearInterval(timerInterval);
         isTimerRunning = false;
         if (btnTimerStart) {
           btnTimerStart.textContent = "▶ Start";
-          btnTimerStart.style.color = "var(--accent-emerald)";
+          btnTimerStart.style.color = "var(--accent-emerald-light)";
         }
-        playTimerChime();
-        // Visual vibration if supported
+        playSound("timerFinish");
         if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
       }
     }
@@ -172,7 +268,7 @@ function pauseTimer() {
   isTimerRunning = false;
   if (btnTimerStart) {
     btnTimerStart.textContent = "▶ Resume";
-    btnTimerStart.style.color = "var(--accent-emerald)";
+    btnTimerStart.style.color = "var(--accent-emerald-light)";
   }
 }
 
@@ -182,18 +278,27 @@ function resetTimer() {
   timerRemainingSec = timerDurationSec;
   if (btnTimerStart) {
     btnTimerStart.textContent = "▶ Start";
-    btnTimerStart.style.color = "var(--accent-emerald)";
+    btnTimerStart.style.color = "var(--accent-emerald-light)";
   }
   updateTimerDisplay();
 }
 
 // Preset button handlers
-document.querySelectorAll(".btn-timer-preset").forEach(btn => {
+document.querySelectorAll(".btn-timer-preset[data-sec]").forEach(btn => {
   btn.addEventListener("click", () => {
     const sec = parseInt(btn.dataset.sec, 10);
     startTimer(sec);
   });
 });
+
+if (btnTimerAdd15) {
+  btnTimerAdd15.addEventListener("click", () => {
+    timerRemainingSec += 15;
+    timerDurationSec += 15;
+    updateTimerDisplay();
+    if (!isTimerRunning) startTimer();
+  });
+}
 
 if (btnTimerStart) {
   btnTimerStart.addEventListener("click", () => {
@@ -212,11 +317,16 @@ if (btnTimerReset) {
   btnTimerReset.addEventListener("click", resetTimer);
 }
 
-if (btnTimerSound) {
-  btnTimerSound.addEventListener("click", () => {
-    soundEnabled = !soundEnabled;
-    btnTimerSound.textContent = soundEnabled ? "🔔 Sound On" : "🔕 Sound Off";
-    btnTimerSound.style.color = soundEnabled ? "var(--text-main)" : "var(--accent-coral)";
+if (btnTimerSkip) {
+  btnTimerSkip.addEventListener("click", () => {
+    if (timerInterval) clearInterval(timerInterval);
+    isTimerRunning = false;
+    timerRemainingSec = 0;
+    updateTimerDisplay();
+    if (btnTimerStart) {
+      btnTimerStart.textContent = "▶ Start";
+      btnTimerStart.style.color = "var(--accent-emerald-light)";
+    }
   });
 }
 
@@ -231,7 +341,6 @@ function updateHeaderStats() {
   const elStreak = document.getElementById("header-streak-count");
   const elProgressBar = document.getElementById("master-progress-bar");
   const elPercentLabel = document.getElementById("header-percent-label");
-  const elPhaseLabel = document.getElementById("header-phase-label");
 
   if (elCompleted) elCompleted.textContent = completedCount;
   if (elStreak) elStreak.textContent = streakCount;
@@ -240,12 +349,15 @@ function updateHeaderStats() {
   if (elProgressBar) elProgressBar.style.width = `${Math.max(1, pct)}%`;
   if (elPercentLabel) elPercentLabel.textContent = `${pct}% Complete (${completedCount}/100)`;
 
-  // Determine active phase for current day
+  // Update active phase marker in header
   const curDay = appState.currentDay || 1;
-  let phaseText = "Phase 1: Foundation & Posture";
-  if (curDay > 65) phaseText = "Phase 3: Peak Shred & Agility";
-  else if (curDay > 30) phaseText = "Phase 2: Muscle Density & V-Taper";
-  if (elPhaseLabel) elPhaseLabel.textContent = phaseText;
+  const p1 = document.getElementById("marker-p1");
+  const p2 = document.getElementById("marker-p2");
+  const p3 = document.getElementById("marker-p3");
+
+  if (p1) p1.classList.toggle("active", curDay <= 30);
+  if (p2) p2.classList.toggle("active", curDay > 30 && curDay <= 65);
+  if (p3) p3.classList.toggle("active", curDay > 65);
 }
 
 function calculateStreak() {
@@ -263,6 +375,27 @@ function calculateStreak() {
     }
   }
   return streak;
+}
+
+// Header phase marker click navigation
+document.querySelectorAll(".phase-marker").forEach(marker => {
+  marker.addEventListener("click", () => {
+    const phaseNum = parseInt(marker.dataset.phase, 10);
+    if (phaseNum === 1) appState.currentDay = 1;
+    else if (phaseNum === 2) appState.currentDay = 31;
+    else if (phaseNum === 3) appState.currentDay = 66;
+    saveState();
+    renderTodayWorkout();
+    switchTab("tab-today");
+  });
+});
+
+// Brand logo click navigates to Today's workout
+const brandHomeBtn = document.getElementById("brand-home-btn");
+if (brandHomeBtn) {
+  brandHomeBtn.addEventListener("click", () => {
+    switchTab("tab-today");
+  });
 }
 
 // ============================================================================
@@ -291,15 +424,90 @@ function switchTab(tabId) {
   });
 
   // Re-render views if necessary
-  if (tabId === "tab-roadmap") {
+  if (tabId === "tab-today") {
+    renderTodayWorkout();
+  } else if (tabId === "tab-roadmap") {
     renderCalendarGrid();
   } else if (tabId === "tab-library") {
     renderExerciseLibrary();
+  } else if (tabId === "tab-nutrition") {
+    renderNutritionView();
   } else if (tabId === "tab-progress") {
     renderProgressTable();
     renderProgressChart();
   }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+// ============================================================================
+// 7-DAY WEEK SCRUBBER CAROUSEL
+// ============================================================================
+function renderWeekScrubber() {
+  const container = document.getElementById("scrubber-days-container");
+  const titleBadge = document.getElementById("scrubber-week-title");
+  if (!container) return;
+
+  const curDay = appState.currentDay;
+  const currentWeek = Math.ceil(curDay / 7);
+  const totalWeeks = Math.ceil(100 / 7);
+
+  if (titleBadge) {
+    titleBadge.textContent = `Week ${currentWeek} of ${totalWeeks} (Days ${(currentWeek - 1) * 7 + 1}–${Math.min(100, currentWeek * 7)})`;
+  }
+
+  // Generate 7 days for the current week
+  const startDay = (currentWeek - 1) * 7 + 1;
+  const dayNamesShort = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  let html = "";
+  for (let i = 0; i < 7; i++) {
+    const dayNum = startDay + i;
+    if (dayNum > 100) break;
+
+    const isCompleted = appState.completedDays.includes(dayNum);
+    const isActive = dayNum === curDay;
+    const dayData = WORKOUT_DAYS.find(d => d.day === dayNum);
+    const isWeekend = i >= 5;
+
+    html += `
+      <div class="week-day-pill ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}" 
+           onclick="window.jumpToDay(${dayNum})" title="${dayData ? dayData.title : ''}">
+        <span class="day-code">${dayNamesShort[i]}</span>
+        <span class="day-number">${dayNum}</span>
+        ${isCompleted ? '<span class="day-status-dot"></span>' : ''}
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+
+  // Arrow navigation
+  const btnPrevWeek = document.getElementById("btn-scrubber-prev-week");
+  const btnNextWeek = document.getElementById("btn-scrubber-next-week");
+  if (btnPrevWeek) {
+    btnPrevWeek.disabled = currentWeek <= 1;
+    btnPrevWeek.onclick = () => {
+      const prevWeekStart = Math.max(1, (currentWeek - 2) * 7 + 1);
+      window.jumpToDay(prevWeekStart);
+    };
+  }
+  if (btnNextWeek) {
+    btnNextWeek.disabled = currentWeek >= totalWeeks;
+    btnNextWeek.onclick = () => {
+      const nextWeekStart = Math.min(100, currentWeek * 7 + 1);
+      window.jumpToDay(nextWeekStart);
+    };
+  }
+}
+
+// Global jump helper
+window.jumpToDay = function(dayNum) {
+  appState.currentDay = Math.max(1, Math.min(100, dayNum));
+  saveState();
+  renderTodayWorkout();
+  closeJumpModal();
+};
 
 // ============================================================================
 // TODAY'S WORKOUT VIEW RENDERING
@@ -317,7 +525,7 @@ function getDayData(dayNum) {
       duration: original.roomRoutine.duration,
       exercises: original.roomRoutine.exercises.map(rx => ({
         ...rx,
-        targetWeight: "Bodyweight (Focus on speed & form)"
+        targetWeight: "Bodyweight (Speed & Form)"
       }))
     };
   }
@@ -328,7 +536,10 @@ function renderTodayWorkout() {
   const dayNum = appState.currentDay;
   const day = getDayData(dayNum);
 
-  // Update navigation labels
+  // Update Week Scrubber
+  renderWeekScrubber();
+
+  // Navigation labels
   const prevBtn = document.getElementById("btn-prev-day");
   const nextBtn = document.getElementById("btn-next-day");
   const labelPrev = document.getElementById("label-prev-day-num");
@@ -366,7 +577,7 @@ function renderTodayWorkout() {
   if (isWeekendHome) {
     if (locType) locType.textContent = "Room / Outdoors (Weekend)";
     if (modeStatus) modeStatus.textContent = "🏠 Weekend Room Agility Routine";
-    if (modeDesc) modeDesc.textContent = "No equipment required. High agility and active recovery in your room.";
+    if (modeDesc) modeDesc.textContent = "Zero equipment required. High agility and active recovery right in your room.";
     if (btnToggleMode) btnToggleMode.style.display = "none";
   } else {
     if (btnToggleMode) btnToggleMode.style.display = "inline-flex";
@@ -379,7 +590,7 @@ function renderTodayWorkout() {
     } else {
       if (locType) locType.textContent = "Corporate Gym";
       if (modeStatus) modeStatus.textContent = "🏢 Corporate Gym Routine";
-      if (modeDesc) modeDesc.textContent = "On holiday or working from home today? Switch to a 0-equipment room workout!";
+      if (modeDesc) modeDesc.textContent = "On holiday or working from home today? Convert this routine into 0-equipment room exercises!";
       btnToggleMode.className = "mode-btn";
       btnToggleMode.innerHTML = "<span>🔄</span> Switch to Room Workout";
     }
@@ -440,39 +651,60 @@ function renderExerciseCards(day) {
   day.exercises.forEach(ex => {
     const libEntry = EXERCISE_LIBRARY[ex.id] || {
       name: ex.id.replace(/_/g, " "),
-      target: "Full Body",
-      proTip: "Keep good posture and breathe smoothly.",
+      category: "Full Body",
+      target: "Athletic Conditioning",
+      equipment: "Gym Equipment",
+      postureBenefit: "Maintains athletic posture.",
+      image: `assets/exercises/${ex.id}.svg`,
+      cues: ["Maintain core brace", "Breathe smoothly"],
+      proTip: "Keep good posture and smooth tempo.",
       mistake: "Avoid rushing reps."
     };
+
+    const imageSrc = libEntry.image || `assets/exercises/${ex.id}.svg`;
 
     const card = document.createElement("div");
     card.className = "exercise-card";
 
-    // Build Set Rows
+    // Build Set Rows with Stepper Controls
     const setRowsHtml = [];
     for (let s = 1; s <= ex.sets; s++) {
       const setKey = `${day.day}_${ex.id}_${s}`;
       const savedSet = appState.loggedSets[setKey] || { checked: false, weight: "", reps: "" };
 
+      // Default weight/reps suggestions
+      const defaultWeight = savedSet.weight !== "" ? savedSet.weight : (ex.targetWeight ? ex.targetWeight.split(" ")[0].replace(/[^0-9.]/g, '') : "10");
+      const defaultReps = savedSet.reps !== "" ? savedSet.reps : (typeof ex.reps === 'string' ? ex.reps.split("-")[0].replace(/[^0-9]/g, '') : "10");
+
       setRowsHtml.push(`
         <div class="set-row ${savedSet.checked ? 'done' : ''}" id="row-${setKey}">
           <div class="set-label">Set ${s}</div>
-          <div class="set-inputs">
-            <div class="set-input-group">
-              <input type="text" placeholder="${ex.targetWeight || 'kg'}" value="${savedSet.weight}" 
-                     data-key="${setKey}" data-field="weight" class="set-val-input" title="Weight used">
-              <span>kg</span>
+          <div class="set-inputs-wrap">
+            
+            <!-- Weight Stepper -->
+            <div class="stepper-control" title="Weight used">
+              <button type="button" class="stepper-btn" onclick="window.stepValue('${setKey}', 'weight', -2.5)">-</button>
+              <input type="text" value="${savedSet.weight || defaultWeight}" 
+                     data-key="${setKey}" data-field="weight" class="stepper-input set-val-input">
+              <span class="stepper-unit">kg</span>
+              <button type="button" class="stepper-btn" onclick="window.stepValue('${setKey}', 'weight', 2.5)">+</button>
             </div>
-            <div class="set-input-group">
-              <input type="text" placeholder="${ex.reps}" value="${savedSet.reps}" 
-                     data-key="${setKey}" data-field="reps" class="set-val-input" title="Reps completed">
-              <span>reps</span>
+
+            <!-- Reps Stepper -->
+            <div class="stepper-control" title="Reps completed">
+              <button type="button" class="stepper-btn" onclick="window.stepValue('${setKey}', 'reps', -1)">-</button>
+              <input type="text" value="${savedSet.reps || defaultReps}" 
+                     data-key="${setKey}" data-field="reps" class="stepper-input set-val-input">
+              <span class="stepper-unit">reps</span>
+              <button type="button" class="stepper-btn" onclick="window.stepValue('${setKey}', 'reps', 1)">+</button>
             </div>
+
             <button class="quick-timer-btn" data-rest="${ex.rest || 60}" title="Start ${ex.rest || 60}s rest timer">
               ⏱️ ${ex.rest || 60}s
             </button>
+
             <button class="set-check-btn ${savedSet.checked ? 'checked' : ''}" 
-                    data-key="${setKey}" title="Mark set finished">
+                    data-key="${setKey}" data-rest="${ex.rest || 60}" title="Mark set finished & start rest timer">
               ${savedSet.checked ? '✓' : ''}
             </button>
           </div>
@@ -481,32 +713,50 @@ function renderExerciseCards(day) {
     }
 
     card.innerHTML = `
-      <div class="exercise-header">
-        <div class="exercise-title-group">
-          <h3>${libEntry.name}</h3>
-          <div class="exercise-target">🎯 ${libEntry.target}</div>
+      <div class="exercise-layout-grid">
+        <!-- Visual Exercise Artwork Image -->
+        <div class="exercise-image-wrap" onclick="window.openExerciseModal('${ex.id}')" title="Click to view technique & posture guide">
+          <img src="${imageSrc}" alt="${libEntry.name}" loading="lazy" 
+               onerror="this.onerror=null; this.src='assets/exercises/db_flat_bench_press.svg';">
+          <div class="exercise-image-overlay">
+            <span>📖</span> Form Guide
+          </div>
         </div>
-        <button class="guide-btn" data-exid="${ex.id}">
-          <span>📖</span> Form Guide
-        </button>
-      </div>
 
-      <div class="exercise-meta-pills">
-        <div class="pill">Sets: <strong>${ex.sets}</strong></div>
-        <div class="pill">Target Reps: <strong>${ex.reps}</strong></div>
-        <div class="pill">Rest: <strong>${ex.rest || 60}s</strong></div>
-        <div class="pill">Suggested: <strong>${ex.targetWeight || 'Bodyweight'}</strong></div>
-      </div>
+        <!-- Exercise Details & Sets Column -->
+        <div class="exercise-details-col">
+          <div class="exercise-top-row">
+            <div class="exercise-title-group">
+              <h3>${libEntry.name}</h3>
+              <div class="exercise-target-line">
+                <span>🎯</span> ${libEntry.target}
+              </div>
+            </div>
+            <div class="exercise-actions">
+              <button class="guide-btn" onclick="window.openExerciseModal('${ex.id}')">
+                <span>📖</span> Technique
+              </button>
+            </div>
+          </div>
 
-      <div class="sets-grid">
-        ${setRowsHtml.join("")}
+          <div class="exercise-meta-pills">
+            <div class="pill">Sets: <strong>${ex.sets}</strong></div>
+            <div class="pill">Target: <strong>${ex.reps} reps</strong></div>
+            <div class="pill">Rest: <strong>${ex.rest || 60}s</strong></div>
+            <div class="pill">Suggested: <strong>${ex.targetWeight || 'Bodyweight'}</strong></div>
+          </div>
+
+          <div class="sets-grid">
+            ${setRowsHtml.join("")}
+          </div>
+        </div>
       </div>
     `;
 
     container.appendChild(card);
   });
 
-  // Attach event listeners for inputs, checks, and rest triggers
+  // Attach input listeners
   container.querySelectorAll(".set-val-input").forEach(input => {
     input.addEventListener("change", (e) => {
       const key = e.target.dataset.key;
@@ -517,41 +767,61 @@ function renderExerciseCards(day) {
     });
   });
 
+  // Set checkmark triggers
   container.querySelectorAll(".set-check-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
+    btn.addEventListener("click", () => {
       const key = btn.dataset.key;
+      const restSec = parseInt(btn.dataset.rest, 10) || 60;
       if (!appState.loggedSets[key]) appState.loggedSets[key] = { checked: false, weight: "", reps: "" };
-      appState.loggedSets[key].checked = !appState.loggedSets[key].checked;
+      
+      const newStatus = !appState.loggedSets[key].checked;
+      appState.loggedSets[key].checked = newStatus;
       
       const row = document.getElementById(`row-${key}`);
-      if (row) row.classList.toggle("done", appState.loggedSets[key].checked);
-      btn.classList.toggle("checked", appState.loggedSets[key].checked);
-      btn.textContent = appState.loggedSets[key].checked ? "✓" : "";
+      if (row) row.classList.toggle("done", newStatus);
+      btn.classList.toggle("checked", newStatus);
+      btn.textContent = newStatus ? "✓" : "";
 
+      playSound("click");
       saveState();
 
-      // If checked, automatically start the rest timer!
-      if (appState.loggedSets[key].checked) {
-        const restBtn = row.querySelector(".quick-timer-btn");
-        const restSec = restBtn ? parseInt(restBtn.dataset.rest, 10) : 60;
+      // If checked, launch rest timer automatically!
+      if (newStatus) {
         startTimer(restSec);
       }
     });
   });
 
+  // Quick timer button triggers
   container.querySelectorAll(".quick-timer-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const sec = parseInt(btn.dataset.rest, 10) || 60;
       startTimer(sec);
     });
   });
-
-  container.querySelectorAll(".guide-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      openExerciseModal(btn.dataset.exid);
-    });
-  });
 }
+
+// Stepper numeric modifier helper
+window.stepValue = function(key, field, delta) {
+  if (!appState.loggedSets[key]) {
+    appState.loggedSets[key] = { checked: false, weight: "", reps: "" };
+  }
+  const row = document.getElementById(`row-${key}`);
+  if (!row) return;
+
+  const input = row.querySelector(`input[data-field="${field}"]`);
+  if (!input) return;
+
+  let currentVal = parseFloat(input.value) || 0;
+  let newVal = Math.max(0, currentVal + delta);
+  if (field === "reps") newVal = Math.round(newVal);
+  else newVal = parseFloat(newVal.toFixed(1));
+
+  input.value = newVal;
+  appState.loggedSets[key][field] = String(newVal);
+  saveState();
+  playSound("click");
+};
 
 // Prev / Next day click handlers
 const btnPrev = document.getElementById("btn-prev-day");
@@ -591,37 +861,52 @@ if (btnToggleMode) {
   });
 }
 
-// Mark Day Completed button
+// Complete Day Button Handler with Confetti & Modal Celebration
 const btnCompleteDay = document.getElementById("btn-complete-day");
 if (btnCompleteDay) {
   btnCompleteDay.addEventListener("click", () => {
     const dayNum = appState.currentDay;
     const idx = appState.completedDays.indexOf(dayNum);
     if (idx >= 0) {
+      // Undo completion
       appState.completedDays.splice(idx, 1);
+      saveState();
+      renderTodayWorkout();
     } else {
+      // Complete day!
       appState.completedDays.push(dayNum);
-      // Play celebratory chime
-      playTimerChime();
+      saveState();
+      renderTodayWorkout();
+      playSound("celebrate");
+      triggerConfetti();
+      openCelebrationModal(dayNum);
     }
-    saveState();
-    renderTodayWorkout();
   });
 }
 
-// Accordion Collapses
+// Accordion Toggles
 const warmupToggle = document.getElementById("warmup-toggle");
 const cooldownToggle = document.getElementById("cooldown-toggle");
 if (warmupToggle) {
   warmupToggle.addEventListener("click", () => {
     const list = document.getElementById("warmup-list");
-    if (list) list.style.display = list.style.display === "none" ? "grid" : "none";
+    const acc = document.getElementById("warmup-accordion");
+    if (list && acc) {
+      const isHidden = list.style.display === "none";
+      list.style.display = isHidden ? "grid" : "none";
+      acc.classList.toggle("open", isHidden);
+    }
   });
 }
 if (cooldownToggle) {
   cooldownToggle.addEventListener("click", () => {
     const list = document.getElementById("cooldown-list");
-    if (list) list.style.display = list.style.display === "none" ? "grid" : "none";
+    const acc = document.getElementById("cooldown-accordion");
+    if (list && acc) {
+      const isHidden = list.style.display === "none";
+      list.style.display = isHidden ? "grid" : "none";
+      acc.classList.toggle("open", isHidden);
+    }
   });
 }
 
@@ -660,7 +945,7 @@ function renderCalendarGrid() {
       <div class="day-badge-title">${d.dayName}: ${d.title.split(":")[0]}</div>
       <div class="day-badge-footer">
         <span class="badge phase${d.phase}">P${d.phase}</span>
-        <span>${isCompleted ? '✅' : '○'}</span>
+        <span>${isCompleted ? '✅ Done' : '○ Pending'}</span>
       </div>
     `;
 
@@ -686,7 +971,7 @@ document.querySelectorAll("#roadmap-filter-group .filter-chip").forEach(chip => 
 });
 
 // ============================================================================
-// VIEW 3: EXERCISE & AGILITY LIBRARY
+// VIEW 3: EXERCISE & AGILITY LIBRARY (Visual Gallery)
 // ============================================================================
 let currentLibCategory = "all";
 let searchKeyword = "";
@@ -700,42 +985,46 @@ function renderExerciseLibrary() {
 
   const filtered = exerciseEntries.filter(([id, ex]) => {
     const matchesCat = currentLibCategory === "all" || ex.category.includes(currentLibCategory);
-    const textTarget = (ex.name + " " + ex.target + " " + ex.category + " " + ex.equipment).toLowerCase();
+    const textTarget = (ex.name + " " + ex.target + " " + ex.category + " " + ex.equipment + " " + (ex.cues ? ex.cues.join(" ") : "")).toLowerCase();
     const matchesSearch = !searchKeyword || textTarget.includes(searchKeyword.toLowerCase());
     return matchesCat && matchesSearch;
   });
 
   if (!filtered.length) {
-    container.innerHTML = `<p style="color: var(--text-muted); padding: 20px;">No exercises found matching your search.</p>`;
+    container.innerHTML = `<p style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">No exercises found matching your search.</p>`;
     return;
   }
 
   filtered.forEach(([id, ex]) => {
+    const imageSrc = ex.image || `assets/exercises/${id}.svg`;
     const card = document.createElement("div");
     card.className = "lib-card";
+    
     card.innerHTML = `
-      <div>
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-          <h4>${ex.name}</h4>
-          <span class="badge phase1">${ex.category}</span>
-        </div>
-        <p style="font-size: 0.8rem; color: var(--accent-cyan); font-weight: 600;">🎯 ${ex.target}</p>
-        <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">🛠️ ${ex.equipment}</p>
-        
-        <div class="lib-posture-box">
-          <strong>Posture &amp; Waist Benefit:</strong><br>
-          ${ex.postureBenefit}
-        </div>
+      <div class="lib-card-img-wrap" onclick="window.openExerciseModal('${id}')" title="View form cues">
+        <img src="${imageSrc}" alt="${ex.name}" loading="lazy"
+             onerror="this.onerror=null; this.src='assets/exercises/db_flat_bench_press.svg';">
       </div>
+      <div class="lib-card-body">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+            <h4 style="font-size: 1.05rem; font-weight: 800;">${ex.name}</h4>
+            <span class="badge phase1">${ex.category}</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--accent-cyan-light); font-weight: 600;">🎯 ${ex.target}</p>
+          <p style="font-size: 0.76rem; color: var(--text-dim); margin-top: 4px;">🛠️ ${ex.equipment}</p>
+          
+          <div class="lib-posture-box">
+            <strong>Posture &amp; Waist Benefit:</strong><br>
+            ${ex.postureBenefit}
+          </div>
+        </div>
 
-      <button class="btn-primary" style="margin-top: 12px; font-size: 0.8rem; padding: 8px;" data-exid="${id}">
-        📖 View Step-by-Step Form &amp; Mistakes
-      </button>
+        <button class="btn-primary" style="margin-top: 14px; font-size: 0.84rem; padding: 10px;" onclick="window.openExerciseModal('${id}')">
+          📖 View Step-by-Step Form &amp; Mistakes
+        </button>
+      </div>
     `;
-
-    card.querySelector("button").addEventListener("click", () => {
-      openExerciseModal(id);
-    });
 
     container.appendChild(card);
   });
@@ -783,11 +1072,52 @@ function renderNutritionView() {
       <tr>
         <td><strong>${item.name}</strong></td>
         <td>${item.serving}</td>
-        <td style="color: var(--accent-emerald); font-weight: 700;">${item.protein}</td>
+        <td style="color: var(--accent-emerald-light); font-weight: 800;">${item.protein}</td>
         <td>${item.calories}</td>
       </tr>
     `).join("");
   }
+
+  // Render Water Glasses
+  renderWaterTracker();
+}
+
+function renderWaterTracker() {
+  const container = document.getElementById("water-glasses-container");
+  if (!container) return;
+
+  const totalGlasses = 10; // 10 * 350ml = 3.5L
+  let html = "";
+  for (let i = 1; i <= totalGlasses; i++) {
+    const isFilled = i <= appState.waterGlasses;
+    html += `
+      <div class="water-glass-btn ${isFilled ? 'filled' : ''}" onclick="window.toggleWaterGlass(${i})" title="Glass ${i}: 350ml">
+        <span>${isFilled ? '💧' : '🥛'}</span>
+        <span class="glass-label">${i * 350}ml</span>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+}
+
+window.toggleWaterGlass = function(glassIndex) {
+  if (appState.waterGlasses === glassIndex) {
+    appState.waterGlasses = glassIndex - 1;
+  } else {
+    appState.waterGlasses = glassIndex;
+    playSound("water");
+  }
+  saveState();
+  renderWaterTracker();
+};
+
+const btnResetWater = document.getElementById("btn-reset-water");
+if (btnResetWater) {
+  btnResetWater.addEventListener("click", () => {
+    appState.waterGlasses = 0;
+    saveState();
+    renderWaterTracker();
+  });
 }
 
 // ============================================================================
@@ -795,7 +1125,6 @@ function renderNutritionView() {
 // ============================================================================
 const measurementForm = document.getElementById("measurement-log-form");
 if (measurementForm) {
-  // Pre-fill today's date
   const dateInput = document.getElementById("log-date");
   if (dateInput) dateInput.value = new Date().toISOString().split("T")[0];
 
@@ -820,7 +1149,6 @@ if (measurementForm) {
     };
 
     appState.measurements.push(newEntry);
-    // Sort chronologically
     appState.measurements.sort((a, b) => new Date(a.date) - new Date(b.date));
     saveState();
 
@@ -837,19 +1165,19 @@ function renderProgressTable() {
   if (!tableBody) return;
 
   if (!appState.measurements.length) {
-    tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No measurements logged yet.</td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">No measurements logged yet.</td></tr>`;
     return;
   }
 
   tableBody.innerHTML = [...appState.measurements].reverse().map(m => `
     <tr>
-      <td>${m.date}</td>
-      <td style="color: var(--accent-cyan); font-weight: 700;">${m.weight.toFixed(1)} kg</td>
-      <td style="color: var(--accent-coral); font-weight: 700;">${m.waist.toFixed(1)}"</td>
+      <td><strong>${m.date}</strong></td>
+      <td style="color: var(--accent-cyan-light); font-weight: 800;">${m.weight.toFixed(1)} kg</td>
+      <td style="color: var(--accent-coral-light); font-weight: 800;">${m.waist.toFixed(1)}"</td>
       <td>${m.energy ? m.energy + "/10 ⚡" : "-"}</td>
       <td>
-        <button class="day-nav-btn" style="padding: 3px 8px; font-size: 0.72rem; color: var(--accent-coral);" 
-                onclick="deleteMeasurement('${m.id}')">Delete</button>
+        <button class="day-nav-btn" style="padding: 4px 10px; font-size: 0.74rem; color: var(--accent-coral-light);" 
+                onclick="window.deleteMeasurement('${m.id}')">Delete</button>
       </td>
     </tr>
   `).join("");
@@ -876,12 +1204,11 @@ function renderProgressChart() {
 
   const width = 500;
   const height = 200;
-  const padLeft = 40;
-  const padRight = 30;
+  const padLeft = 45;
+  const padRight = 35;
   const padTop = 30;
   const padBottom = 30;
 
-  // Min and max for waist (inches) and weight (kg)
   const weights = logs.map(l => l.weight);
   const waists = logs.map(l => l.waist);
 
@@ -917,36 +1244,34 @@ function renderProgressChart() {
     : "";
 
   let svgContent = `
-    <!-- Background Grid Lines -->
+    <!-- Grid -->
     <line x1="${padLeft}" y1="${padTop}" x2="${width - padRight}" y2="${padTop}" stroke="#1e293b" stroke-dasharray="4" />
     <line x1="${padLeft}" y1="${(padTop + height - padBottom) / 2}" x2="${width - padRight}" y2="${(padTop + height - padBottom) / 2}" stroke="#1e293b" stroke-dasharray="4" />
     <line x1="${padLeft}" y1="${height - padBottom}" x2="${width - padRight}" y2="${height - padBottom}" stroke="#334155" />
     
-    <!-- Trend Paths -->
+    <!-- Paths -->
     ${weightPathD ? `<path d="${weightPathD}" fill="none" stroke="var(--accent-cyan)" stroke-width="3" stroke-linecap="round" />` : ""}
     ${waistPathD ? `<path d="${waistPathD}" fill="none" stroke="var(--accent-coral)" stroke-width="3" stroke-linecap="round" />` : ""}
   `;
 
-  // Draw Weight Points
   weightPoints.forEach(p => {
     svgContent += `
-      <circle cx="${p.x}" cy="${p.y}" r="4" fill="var(--accent-cyan)" />
-      <text x="${p.x}" y="${p.y - 8}" text-anchor="middle" fill="var(--accent-cyan)" font-size="10" font-weight="bold">${p.val}k</text>
+      <circle cx="${p.x}" cy="${p.y}" r="5" fill="var(--accent-cyan)" />
+      <text x="${p.x}" y="${p.y - 10}" text-anchor="middle" fill="var(--accent-cyan-light)" font-size="10" font-weight="bold">${p.val}k</text>
     `;
   });
 
-  // Draw Waist Points
   waistPoints.forEach(p => {
     svgContent += `
-      <circle cx="${p.x}" cy="${p.y}" r="4" fill="var(--accent-coral)" />
-      <text x="${p.x}" y="${p.y + 14}" text-anchor="middle" fill="var(--accent-coral)" font-size="10" font-weight="bold">${p.val}"</text>
+      <circle cx="${p.x}" cy="${p.y}" r="5" fill="var(--accent-coral)" />
+      <text x="${p.x}" y="${p.y + 16}" text-anchor="middle" fill="var(--accent-coral-light)" font-size="10" font-weight="bold">${p.val}"</text>
     `;
   });
 
   svg.innerHTML = svgContent;
 }
 
-// Export Backup and Print View handlers
+// Export Backup & Print View
 const btnExport = document.getElementById("btn-export-data");
 if (btnExport) {
   btnExport.addEventListener("click", () => {
@@ -966,12 +1291,13 @@ if (btnPrint) {
 }
 
 // ============================================================================
-// EXERCISE TECHNIQUE MODAL DIALOG
+// MODAL DIALOGS (Form Guide, Quick Jump, Celebration)
 // ============================================================================
 const modalDialog = document.getElementById("exercise-modal");
 const btnCloseModal = document.getElementById("btn-close-modal");
+const btnPracticeTimer = document.getElementById("btn-modal-practice-timer");
 
-function openExerciseModal(exId) {
+window.openExerciseModal = function(exId) {
   const entry = EXERCISE_LIBRARY[exId];
   if (!entry || !modalDialog) return;
 
@@ -981,13 +1307,18 @@ function openExerciseModal(exId) {
   document.getElementById("modal-pro-tip").textContent = entry.proTip;
   document.getElementById("modal-mistake").textContent = entry.mistake;
 
+  const modalImg = document.getElementById("modal-exercise-image");
+  if (modalImg) {
+    modalImg.src = entry.image || `assets/exercises/${exId}.svg`;
+  }
+
   const stepList = document.getElementById("modal-step-list");
-  if (stepList) {
+  if (stepList && entry.steps) {
     stepList.innerHTML = entry.steps.map(s => `<li>${s}</li>`).join("");
   }
 
   modalDialog.showModal();
-}
+};
 
 if (btnCloseModal && modalDialog) {
   btnCloseModal.addEventListener("click", () => {
@@ -1002,6 +1333,134 @@ if (btnCloseModal && modalDialog) {
       modalDialog.close();
     }
   });
+}
+
+if (btnPracticeTimer) {
+  btnPracticeTimer.addEventListener("click", () => {
+    if (modalDialog) modalDialog.close();
+    startTimer(30);
+  });
+}
+
+// Quick Jump Modal
+const jumpModal = document.getElementById("jump-modal");
+const btnQuickJump = document.getElementById("btn-quick-jump");
+const btnCloseJumpModal = document.getElementById("btn-close-jump-modal");
+const btnConfirmJump = document.getElementById("btn-confirm-jump");
+const jumpDayInput = document.getElementById("jump-day-input");
+
+if (btnQuickJump && jumpModal) {
+  btnQuickJump.addEventListener("click", () => {
+    jumpModal.showModal();
+    if (jumpDayInput) jumpDayInput.focus();
+  });
+}
+
+function closeJumpModal() {
+  if (jumpModal) jumpModal.close();
+}
+
+if (btnCloseJumpModal) {
+  btnCloseJumpModal.addEventListener("click", closeJumpModal);
+}
+
+if (btnConfirmJump && jumpDayInput) {
+  btnConfirmJump.addEventListener("click", () => {
+    const val = parseInt(jumpDayInput.value, 10);
+    if (!isNaN(val)) {
+      window.jumpToDay(val);
+    }
+  });
+}
+
+// Celebration Modal
+const celebrationModal = document.getElementById("celebration-modal");
+const btnCloseCelebration = document.getElementById("btn-close-celebration-modal");
+const btnCelebrationNextDay = document.getElementById("btn-celebration-next-day");
+
+function openCelebrationModal(dayNum) {
+  if (!celebrationModal) return;
+  document.getElementById("celebration-heading").textContent = `Day ${dayNum} Completed!`;
+  document.getElementById("celebration-streak-val").textContent = `${calculateStreak()} Days 🔥`;
+  celebrationModal.showModal();
+}
+
+if (btnCloseCelebration && celebrationModal) {
+  btnCloseCelebration.addEventListener("click", () => celebrationModal.close());
+}
+
+if (btnCelebrationNextDay && celebrationModal) {
+  btnCelebrationNextDay.addEventListener("click", () => {
+    celebrationModal.close();
+    if (appState.currentDay < 100) {
+      appState.currentDay++;
+      saveState();
+      renderTodayWorkout();
+    }
+  });
+}
+
+// ============================================================================
+// LIGHTWEIGHT CANVAS CONFETTI (Zero External CDN)
+// ============================================================================
+function triggerConfetti() {
+  const canvas = document.getElementById("confetti-canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = [];
+  const count = 120;
+  const colors = ["#06b6d4", "#10b981", "#f43f5e", "#f59e0b", "#8b5cf6", "#ffffff"];
+
+  for (let i = 0; i < count; i++) {
+    pieces.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      vx: (Math.random() - 0.5) * 18,
+      vy: (Math.random() - 0.7) * 18,
+      size: Math.random() * 8 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 10,
+      alpha: 1
+    });
+  }
+
+  let animationId;
+  function updateConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+
+    pieces.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.35; // gravity
+      p.rotation += p.rotSpeed;
+      p.alpha -= 0.012;
+
+      if (p.alpha > 0) {
+        alive = true;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
+      }
+    });
+
+    if (alive) {
+      animationId = requestAnimationFrame(updateConfetti);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      cancelAnimationFrame(animationId);
+    }
+  }
+
+  updateConfetti();
 }
 
 // ============================================================================

@@ -15,38 +15,43 @@ If you feel your body is lean but you have a soft lower belly and lack springine
 
 ## 🚀 How to Run the Web Application
 
-The application is completely standalone and zero-dependency (no Node.js server or installation required).
+The application is completely standalone and zero-dependency (no Node.js server or build tools required).
 
 ### Option 1: Direct Browser Launch (Instant)
-1. Navigate to:
-   `C:\Users\SATYA GNANESH\.gemini\antigravity\scratch\gym-transform-100`
+1. Open this folder in File Explorer:
+   `C:\Users\SATYA GNANESH\OneDrive\Documents\Desktop\Gym`
 2. Double-click **`index.html`** or right-click &rarr; *Open With* &rarr; *Google Chrome* / *Microsoft Edge*.
-3. The app opens immediately with full functionality, offline storage, and interactive timers!
+3. The app opens immediately with full functionality, offline storage, local visual workout illustrations, and interactive audio timers!
 
 ### Option 2: Using on Your Mobile Phone at the Gym
 To use the app on your smartphone while working out in the company gym:
-- **Local Network**: Run a simple Python server from this folder:
+- **Local Network**: Run a simple Python or Node server from this folder:
   ```powershell
   python -m http.server 8080
   ```
   Open your mobile browser and visit `http://<YOUR_PC_IP>:8080`.
-- **Add to Home Screen**: In Chrome/Safari on mobile, tap the menu (or Share button) &rarr; **"Add to Home Screen"**. It will behave like a native gym training app with an app icon!
-- **Zero Internet Required**: All 100 days of workouts and form guides are embedded locally and persist via `localStorage`.
+- **Add to Home Screen**: In Chrome/Safari on mobile, tap the menu (or Share button) &rarr; **"Add to Home Screen"**. It will behave like a native gym training app with an app icon and bottom navigation bar!
+- **Zero Internet Required**: All 100 days of workouts, form guides, and vector workout images (`assets/exercises/*.svg`) are embedded locally and persist via `localStorage`.
 
 ---
 
-## 📱 App Key Features
+## 📱 App Key Features (10/10 UX Overhaul)
 
 | Feature | Description |
 | :--- | :--- |
-| **🏋️ Today's Workout** | Shows your current day with dynamic warm-up, exact exercises, target sets & reps, target weights, and post-workout cardio. |
+| **🖼️ Visual Workout Artwork** | Dedicated vector exercise diagrams for all 30 exercises in `assets/exercises/`, highlighting target muscle zones (chest, lats, delts, glutes, core) and motion vectors. |
+| **🏋️ Today's Workout & Week Scrubber** | 7-Day carousel scrubber (Mon–Sun) to quickly switch days, dynamic warm-up checklist, main exercises, and post-workout cardio. |
+| **🔢 Interactive Numeric Steppers** | Fast `[-]` / `[+]` stepper buttons for weights (2.5kg steps) and reps (1 step), making gym logging effortless on mobile with sweaty hands. |
 | **🔄 Gym &harr; Room Toggle** | Working from home or gym closed for a public holiday? Click **"Switch to Room Workout"** to instantly convert that day into a 0-equipment room routine! |
-| **⏱️ Floating Rest Timer** | Sticky rest timer with 30s, 60s, 90s, and 120s presets. Automatically kicks off whenever you check off a set, complete with a chime via the Web Audio API! |
-| **📖 Form & Mistake Guide** | Click "Form Guide" on any exercise to view step-by-step posture alignment, mind-muscle cues, and beginner mistakes to avoid. |
-| **🗺️ 100-Day Map** | Complete interactive calendar across Phase 1 (Foundation), Phase 2 (V-Taper), and Phase 3 (Peak Shred). |
-| **🥑 Belly Fat & Fuel** | Personalized calorie target (1,850 kcal/day), 125g protein guide, and high-protein grocery directory (vegetarian & non-vegetarian). |
-| **📏 Waist & Weight Tracker** | Log your weekly belly button circumference and weight with a live SVG trend chart. |
-| **💾 Backup & Print** | Export your workout log to JSON backup or print a clean summary sheet. |
+| **⏱️ Dynamic Island Rest Timer HUD** | Floating workout timer with circular SVG progress ring, 30s/60s/90s/120s presets, +15s button, and automatic auto-start upon checking off any set! |
+| **🔔 Web Audio Synthesizer** | High-grade synthesized audio chimes for set clicks, 3-2-1 countdown ticks, rest finish bells, and victory fanfares without external audio files. |
+| **🎊 Confetti Celebration Modal** | Completing a day's workout triggers a 60fps confetti explosion and displays a celebration summary with streak count, calories burned, and next-day advance. |
+| **📖 Visual Form & Technique Modal** | Displays high-resolution exercise diagrams, biomechanics posture cues, mind-muscle tips, beginner mistakes, and a live **30s Practice Form Drill** timer! |
+| **🗺️ 100-Day Transformation Map** | Complete interactive calendar across Phase 1 (Foundation), Phase 2 (V-Taper), and Phase 3 (Peak Shred), with phase and location filters. |
+| **💧 Daily Hydration Tracker** | Interactive water glasses counter to track your daily 3.5L hydration goal (essential to flush sodium and stubborn belly water retention). |
+| **🥑 Belly Fat & Fuel Strategy** | Personalized calorie target (1,850 kcal/day), 125g protein guide, 5 scientific truths about skinny-fat, and grocery directory (veg & non-veg). |
+| **📏 Waist & Weight Tracker** | Log your weekly belly-button circumference and scale weight with a dual-line SVG chart with smooth curves and hover stats. |
+| **💾 Backup & Print** | Export your entire training journey to a JSON file or open a clean print view for paper logs. |
 
 ---
 

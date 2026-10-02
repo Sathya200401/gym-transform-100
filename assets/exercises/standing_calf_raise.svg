@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="100%" height="100%" style="background:#0b1120; border-radius:12px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.2" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="100%" height="100%" fill="url(#bgGrad)" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Floor line -->
+  <line x1="30" y1="185" x2="370" y2="185" stroke="#1e293b" stroke-width="2" stroke-dasharray="4" />
+
+  <!-- Header Category & Muscle Badge -->
+  <rect x="20" y="16" width="90" height="22" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="65" y="31" fill="#94a3b8" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">LEGS</text>
+
+  <rect x="118" y="16" width="115" height="22" rx="6" fill="#10b9811a" stroke="#10b98166" stroke-width="1"/>
+  <circle cx="128" cy="27" r="4" fill="#10b981" />
+  <text x="175" y="31" fill="#10b981" font-size="10" font-weight="700" text-anchor="middle">GASTROCNEMIUS & ANKLE AGILITY</text>
+
+  <!-- Specific Anatomical Artwork & Vector Scene -->
+  
+      <!-- Step block -->
+      <rect x="180" y="170" width="80" height="15" rx="3" fill="#334155" />
+
+      <!-- Standing Athlete tall -->
+      <circle cx="210" cy="65" r="11" fill="#94a3b8" />
+      <line x1="210" y1="78" x2="210" y2="128" stroke="#cbd5e1" stroke-width="14" stroke-linecap="round" />
+      <line x1="207" y1="128" x2="207" y2="155" stroke="#94a3b8" stroke-width="8" stroke-linecap="round" />
+
+      <!-- Calves glowing on step -->
+      <line x1="207" y1="150" x2="207" y2="168" stroke="#10b981" stroke-width="8" filter="url(#glow)" />
+      <!-- Heel elevated above step -->
+      <circle cx="212" cy="168" r="4" fill="#f59e0b" />
+
+      <!-- Upward vertical arrow -->
+      <path d="M 235" y="165" d="M 235 165 L 235 145" stroke="#10b981" stroke-width="3" stroke-linecap="round" />
+      <polygon points="235,140 230,147 240,147" fill="#10b981" />
+      <text x="245" y="155" fill="#10b981" font-size="9" font-weight="bold">SPRING</text>
+    
+
+  <!-- Footer Cue Box -->
+  <rect x="18" y="196" width="364" height="32" rx="8" fill="rgba(15,23,42,0.9)" stroke="#1e293b" stroke-width="1" />
+  <text x="32" y="216" fill="#f8fafc" font-size="12" font-weight="600">🎯 Form Cue:</text>
+  <text x="110" y="216" fill="#cbd5e1" font-size="11">Elevated balls of feet, full stretch at bottom, 1s peak squeeze</text>
+</svg>
