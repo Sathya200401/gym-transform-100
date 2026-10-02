@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>GymTransform 100 - Recomposition, Belly Fat & Agility</title>
+  <meta name="description" content="100-Day Athletic Recomposition and Agility Training System for corporate gym & room workouts.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- MASTER APP HEADER -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-text">
+          <h1>GymTransform 100</h1>
+          <p>Recomposition &amp; Athletic Agility</p>
+        </div>
+      </div>
+
+      <div class="header-stats">
+        <div class="stat-chip streak" title="Consecutive workout streak">
+          <span>🔥</span> Streak: <span class="val" id="header-streak-count">0</span>d
+        </div>
+        <div class="stat-chip" title="Total completed workouts">
+          <span>🎯</span> Completed: <span class="val" id="header-completed-count">0</span>/100
+        </div>
+      </div>
+    </div>
+
+    <!-- 100-Day Master Progress Bar -->
+    <div class="master-progress-wrap">
+      <div class="progress-info">
+        <span id="header-phase-label">Phase 1: Foundation &amp; Posture</span>
+        <span id="header-percent-label">0% Done</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-bar" id="master-progress-bar" style="width: 1%;"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="nav-tabs-wrapper" aria-label="Main Navigation">
+    <div class="nav-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="tab-today" role="tab" aria-selected="true">
+        <span>🏋️</span> Today's Workout
+      </button>
+      <button class="tab-btn" data-tab="tab-roadmap" role="tab" aria-selected="false">
+        <span>🗺️</span> 100-Day Map
+      </button>
+      <button class="tab-btn" data-tab="tab-library" role="tab" aria-selected="false">
+        <span>📚</span> Form &amp; Agility Library
+      </button>
+      <button class="tab-btn" data-tab="tab-nutrition" role="tab" aria-selected="false">
+        <span>🥑</span> Belly Fat &amp; Fuel
+      </button>
+      <button class="tab-btn" data-tab="tab-progress" role="tab" aria-selected="false">
+        <span>📏</span> Waist &amp; Body Log
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="main-container">
+
+    <!-- ====================================================================
+         VIEW 1: TODAY'S WORKOUT SCREEN
+         ==================================================================== -->
+    <section id="tab-today" class="tab-view active" role="tabpanel">
+      <!-- Workout Day Header Card -->
+      <div class="card workout-header-card">
+        <div class="workout-day-selector">
+          <button id="btn-prev-day" class="day-nav-btn" aria-label="Previous Day">
+            <span>&larr;</span> Day <span id="label-prev-day-num">0</span>
+          </button>
+          
+          <div class="day-title-wrap" style="text-align: center;">
+            <div id="badge-day-phase" class="badge phase1">Phase 1</div>
+            <h2 id="today-day-title">Day 1: Upper Push, Posture &amp; Footwork</h2>
+            <p id="today-day-focus" style="font-size: 0.88rem; color: var(--text-muted);">Chest, Shoulders, Triceps</p>
+          </div>
+
+          <button id="btn-next-day" class="day-nav-btn" aria-label="Next Day">
+            Day <span id="label-next-day-num">2</span> <span>&rarr;</span>
+          </button>
+        </div>
+
+        <div class="workout-meta-row">
+          <div class="meta-item">
+            <span>⏱️</span> Est. Time: <strong id="today-duration">65-75 min</strong>
+          </div>
+          <div class="meta-item">
+            <span>📍</span> Location: <strong id="today-location-type">Corporate Gym</strong>
+          </div>
+          <div class="meta-item">
+            <span>📅</span> Day: <strong id="today-day-name">Monday</strong>
+          </div>
+        </div>
+
+        <!-- Mode Toggle Banner (Gym vs Room Routine) -->
+        <div class="mode-toggle-banner">
+          <div>
+            <span id="mode-status-text" style="font-weight: 700; color: var(--text-main);">🏢 Corporate Gym Routine</span>
+            <p id="mode-desc-text">On holiday or working from home today? Switch to a 0-equipment room workout!</p>
+          </div>
+          <button id="btn-toggle-mode" class="mode-btn">
+            <span>🔄</span> Switch to Room Workout
+          </button>
+        </div>
+      </div>
+
+      <!-- Posture & Biomechanics Cue -->
+      <div class="posture-banner">
+        <strong><span>🛡️</span> Posture Alignment of the Day:</strong>
+        <p id="today-posture-tip">Retract scapulae: pull your shoulder blades down and back into your back pockets.</p>
+      </div>
+
+      <!-- Dynamic Warm-Up Accordion -->
+      <div class="section-collapse">
+        <div class="section-collapse-header" id="warmup-toggle">
+          <span>🔥 Dynamic Agility Warm-Up (5–8 Mins)</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="drill-list" id="warmup-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Main Exercises Section -->
+      <div style="margin: 24px 0 12px; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 1.15rem; font-weight: 800;">⚡ Main Workout Circuit</h3>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Check each set as you finish</span>
+      </div>
+
+      <div id="exercises-container">
+        <!-- Exercise cards generated dynamically by app.js -->
+      </div>
+
+      <!-- Cardio & Agility Finisher Card -->
+      <div class="card" id="cardio-finisher-card">
+        <div class="card-title">
+          <span>🏃</span> Cardio &amp; Agility Finisher
+        </div>
+        <h4 id="cardio-finisher-name" style="font-size: 1rem; color: var(--accent-coral); margin-bottom: 6px;">
+          Incline Treadmill Stride
+        </h4>
+        <p id="cardio-finisher-protocol" style="font-size: 0.88rem; color: var(--text-main); margin-bottom: 8px;">
+          12 minutes: Incline 8-10%, Speed 4.8 km/h.
+        </p>
+        <p id="cardio-finisher-benefit" style="font-size: 0.8rem; color: var(--accent-emerald);">
+          ✓ Burns visceral belly fat without breaking down upper body muscle.
+        </p>
+      </div>
+
+      <!-- Cooldown & Stretch Accordion -->
+      <div class="section-collapse">
+        <div class="section-collapse-header" id="cooldown-toggle">
+          <span>🧘 Post-Workout Recovery Stretches (5 Mins)</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="drill-list" id="cooldown-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Day Completion Action -->
+      <div class="day-complete-action">
+        <button id="btn-complete-day" class="btn-complete-day">
+          <span>✓</span> Complete Day <span id="label-complete-day-num">1</span> Workout
+        </button>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         VIEW 2: 100-DAY ROADMAP & CALENDAR
+         ==================================================================== -->
+    <section id="tab-roadmap" class="tab-view" role="tabpanel">
+      <div class="card">
+        <div class="card-title">
+          <span>🗺️</span> 100-Day Transformation Roadmap
+        </div>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
+          Click any day to jump directly into its workout routine. Use the filters below to view specific phases or workout types.
+        </p>
+
+        <div class="roadmap-filters" id="roadmap-filter-group">
+          <button class="filter-chip active" data-filter="all">All (100 Days)</button>
+          <button class="filter-chip" data-filter="phase1">Phase 1: Foundation (1–30)</button>
+          <button class="filter-chip" data-filter="phase2">Phase 2: V-Taper (31–65)</button>
+          <button class="filter-chip" data-filter="phase3">Phase 3: Peak Shred (66–100)</button>
+          <button class="filter-chip" data-filter="gym">Gym Days (Mon–Fri)</button>
+          <button class="filter-chip" data-filter="home">Room Days (Sat–Sun)</button>
+          <button class="filter-chip" data-filter="completed">Completed</button>
+        </div>
+
+        <div class="calendar-grid" id="calendar-grid-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         VIEW 3: EXERCISE & AGILITY LIBRARY
+         ==================================================================== -->
+    <section id="tab-library" class="tab-view" role="tabpanel">
+      <div class="card">
+        <div class="card-title">
+          <span>📚</span> Technique, Form &amp; Agility Directory
+        </div>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
+          Master every movement safely. Each exercise highlights how it improves posture, builds your athletic V-taper, or flattens your waistline.
+        </p>
+
+        <div class="library-search-bar">
+          <input type="text" id="lib-search-input" placeholder="🔍 Search exercises by name, muscle, or equipment...">
+        </div>
+
+        <div class="library-category-filters" id="lib-category-filters">
+          <button class="filter-chip active" data-cat="all">All Movements</button>
+          <button class="filter-chip" data-cat="Chest">Chest</button>
+          <button class="filter-chip" data-cat="Back">Back &amp; Lats</button>
+          <button class="filter-chip" data-cat="Shoulders">Shoulders</button>
+          <button class="filter-chip" data-cat="Arms">Arms</button>
+          <button class="filter-chip" data-cat="Legs">Legs &amp; Glutes</button>
+          <button class="filter-chip" data-cat="Core">Core &amp; Belly</button>
+          <button class="filter-chip" data-cat="Agility / Home">Agility &amp; Room</button>
+        </div>
+
+        <div class="exercise-lib-grid" id="lib-cards-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         VIEW 4: BELLY FAT & RECOMPOSITION NUTRITION
+         ==================================================================== -->
+    <section id="tab-nutrition" class="tab-view" role="tabpanel">
+      <div class="card">
+        <div class="card-title">
+          <span>🥑</span> Recomposition &amp; Belly Fat Strategy
+        </div>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
+          Tailored for a 73 kg, 5'7"–5'8" beginner. The goal is <strong>body recomposition</strong>: burning stubborn abdominal visceral fat while building lean muscle to eliminate the "skinny-fat" shape.
+        </p>
+
+        <!-- Macro Summary Boxes -->
+        <div class="macro-summary-grid">
+          <div class="macro-box calories">
+            <span class="badge phase3">Daily Energy Target</span>
+            <div class="macro-value">1,850</div>
+            <div class="macro-desc">Calories / day (400 kcal healthy deficit)</div>
+          </div>
+          <div class="macro-box protein">
+            <span class="badge phase2">Muscle &amp; Belly Cinch</span>
+            <div class="macro-value">125g</div>
+            <div class="macro-desc">Protein (1.7g / kg bodyweight)</div>
+          </div>
+          <div class="macro-box carbs">
+            <span class="badge phase1">Agility &amp; Energy</span>
+            <div class="macro-value">190g</div>
+            <div class="macro-desc">Clean carbs (Oats, rice, fruit, roti)</div>
+          </div>
+          <div class="macro-box fats">
+            <span class="badge home">Hormone Health</span>
+            <div class="macro-value">55g</div>
+            <div class="macro-desc">Healthy fats (Nuts, peanut butter, olive oil)</div>
+          </div>
+        </div>
+
+        <!-- 5 Truths About Belly Fat & Skinny Fat -->
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin: 24px 0 12px;">
+          💡 5 Scientific Truths: Why Your Belly Stays &amp; How We Fix It
+        </h3>
+        <div class="belly-fat-insight-list" id="belly-fat-insights">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- High-Protein Grocery Checklist -->
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin: 28px 0 12px;">
+          🛒 High-Protein Recomposition Foods (Veg &amp; Non-Veg)
+        </h3>
+        <div style="overflow-x: auto;">
+          <table class="food-table">
+            <thead>
+              <tr>
+                <th>Food Item</th>
+                <th>Standard Serving</th>
+                <th>Protein Yield</th>
+                <th>Total Calories</th>
+              </tr>
+            </thead>
+            <tbody id="food-table-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         VIEW 5: PROGRESS & WAIST MEASUREMENT TRACKER
+         ==================================================================== -->
+    <section id="tab-progress" class="tab-view" role="tabpanel">
+      <div class="progress-metrics-top">
+        <!-- New Log Entry Form -->
+        <div class="card log-entry-form">
+          <div class="card-title">
+            <span>📝</span> Log Weekly Measurement
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">
+            Measure your waist at the level of your belly button on an empty stomach every Sunday morning.
+          </p>
+          <form id="measurement-log-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="log-date">Date</label>
+                <input type="date" id="log-date" required>
+              </div>
+              <div class="form-group">
+                <label for="log-weight">Weight (kg)</label>
+                <input type="number" id="log-weight" step="0.1" placeholder="e.g. 72.8" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="log-waist">Waist (Inches)</label>
+                <input type="number" id="log-waist" step="0.25" placeholder="e.g. 34.5" required>
+              </div>
+              <div class="form-group">
+                <label for="log-notes">Energy / Agility (1-10)</label>
+                <input type="number" id="log-notes" min="1" max="10" placeholder="e.g. 8">
+              </div>
+            </div>
+            <button type="submit" class="btn-primary">+ Save Measurement Log</button>
+          </form>
+        </div>
+
+        <!-- Recomposition Trends Chart Card -->
+        <div class="card">
+          <div class="card-title">
+            <span>📈</span> Waist &amp; Weight Recomposition Chart
+          </div>
+          <div class="svg-chart-container" id="chart-container">
+            <svg id="progress-svg-chart" width="100%" height="100%" viewBox="0 0 500 200">
+              <!-- Rendered dynamically by app.js -->
+            </svg>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.78rem;">
+            <span style="color: var(--accent-coral);">● Waist Line (Inches)</span>
+            <span style="color: var(--accent-cyan);">● Weight Line (kg)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Table & Backup Actions -->
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+          <h3 style="font-size: 1.1rem; font-weight: 700;">📜 Measurement History</h3>
+          <div style="display: flex; gap: 8px;">
+            <button id="btn-export-data" class="day-nav-btn" title="Export your data as JSON">💾 Export Backup</button>
+            <button id="btn-print-summary" class="day-nav-btn" title="Print this workout plan">🖨️ Print View</button>
+          </div>
+        </div>
+        
+        <div style="overflow-x: auto;">
+          <table class="food-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Weight (kg)</th>
+                <th>Waist (Inches)</th>
+                <th>Agility Rating</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="progress-log-table-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       STICKY FLOATING REST TIMER (For Gym Use)
+       ====================================================================== -->
+  <aside class="floating-rest-timer" id="rest-timer-widget" aria-label="Rest Timer">
+    <div class="timer-circle-wrap">
+      <div class="timer-digits" id="timer-display">00:60</div>
+    </div>
+    <div class="timer-controls">
+      <div class="timer-preset-row">
+        <button class="btn-timer-preset" data-sec="30">30s</button>
+        <button class="btn-timer-preset" data-sec="60">60s</button>
+        <button class="btn-timer-preset" data-sec="90">90s</button>
+        <button class="btn-timer-preset" data-sec="120">2m</button>
+      </div>
+      <div class="timer-action-row">
+        <button id="btn-timer-start" class="btn-timer-action" style="color: var(--accent-emerald); font-weight: 700;">▶ Start</button>
+        <button id="btn-timer-reset" class="btn-timer-action">↺ Reset</button>
+        <button id="btn-timer-sound" class="btn-timer-action" title="Toggle audio chime">🔔 Sound On</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======================================================================
+       EXERCISE FORM & TECHNIQUE DIALOG MODAL
+       ====================================================================== -->
+  <dialog id="exercise-modal" aria-labelledby="modal-exercise-name">
+    <div class="modal-header">
+      <div>
+        <h3 id="modal-exercise-name">Exercise Technique</h3>
+        <span id="modal-exercise-target" class="badge phase1">Target Muscles</span>
+      </div>
+      <button class="btn-close-modal" id="btn-close-modal" aria-label="Close dialog">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tip-box" id="modal-posture-box">
+        <strong>🛡️ Posture &amp; Recomposition Impact:</strong>
+        <p id="modal-posture-benefit">Opens up rounded shoulders and stretches anterior chest.</p>
+      </div>
+
+      <h4 style="font-size: 0.95rem; font-weight: 700; margin-top: 14px;">Step-by-Step Form Cues:</h4>
+      <ol class="modal-step-list" id="modal-step-list">
+        <!-- Populated by JS -->
+      </ol>
+
+      <div class="modal-tip-box" id="modal-pro-tip-box">
+        <strong>💡 Pro Mind-Muscle Cue:</strong>
+        <p id="modal-pro-tip">Focus on squeezing lats rather than pulling with arms.</p>
+      </div>
+
+      <div class="modal-warning-box" id="modal-warning-box">
+        <strong>⚠️ Beginner Mistake to Avoid:</strong>
+        <p id="modal-mistake">Flaring elbows outward at 90 degrees.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
