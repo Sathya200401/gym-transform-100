@@ -46,9 +46,10 @@ export default function BellyFatGuide() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           
           {/* Card 1: Anterior Pelvic Tilt */}
-          <div className="bg-[#18181B] border border-[#27272A] p-6 hover:border-[#C8FF00]/60 transition-colors flex flex-col justify-between">
+          <div className="bg-[#18181B]/95 backdrop-blur-sm border border-[#27272A] p-6 hover:border-[#C8FF00] hover:shadow-[0_8px_30px_rgba(200,255,0,0.12)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between rounded-sm relative overflow-hidden group">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#C8FF00]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div>
-              <div className="w-10 h-10 bg-[#0D0D0F] border border-[#27272A] flex items-center justify-center text-[#C8FF00] font-bold text-lg mb-4">
+              <div className="w-10 h-10 bg-[#0D0D0F] border border-[#27272A] flex items-center justify-center text-[#C8FF00] font-bold text-lg mb-4 group-hover:border-[#C8FF00]/40 transition-colors">
                 01
               </div>
               <h3 className="text-xl font-heading text-[#F4F4F5] uppercase mb-2">
@@ -58,15 +59,17 @@ export default function BellyFatGuide() {
                 Sitting for hours tightens hip flexors and weakens glutes. This tilts your pelvis forward, forcing your lower abdominal organs to spill forward. Deadbugs, glute bridges, and RDLs pull the pelvis back, instantly flattening the lower stomach by 1–2 inches!
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-[#27272A] text-[11px] font-bold text-[#C8FF00] uppercase">
+            <div className="mt-4 pt-3 border-t border-[#27272A] text-[11px] font-bold text-[#C8FF00] uppercase flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C8FF00]" />
               Fix: Strengthen Glutes &amp; Hamstrings
             </div>
           </div>
 
           {/* Card 2: The TVA Corset */}
-          <div className="bg-[#18181B] border border-[#27272A] p-6 hover:border-[#C8FF00]/60 transition-colors flex flex-col justify-between">
+          <div className="bg-[#18181B]/95 backdrop-blur-sm border border-[#27272A] p-6 hover:border-[#C8FF00] hover:shadow-[0_8px_30px_rgba(200,255,0,0.12)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between rounded-sm relative overflow-hidden group">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#C8FF00]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div>
-              <div className="w-10 h-10 bg-[#0D0D0F] border border-[#27272A] flex items-center justify-center text-[#C8FF00] font-bold text-lg mb-4">
+              <div className="w-10 h-10 bg-[#0D0D0F] border border-[#27272A] flex items-center justify-center text-[#C8FF00] font-bold text-lg mb-4 group-hover:border-[#C8FF00]/40 transition-colors">
                 02
               </div>
               <h3 className="text-xl font-heading text-[#F4F4F5] uppercase mb-2">
@@ -76,15 +79,17 @@ export default function BellyFatGuide() {
                 Standard sit-ups push abdominal contents outward. The Transverse Abdominis is your body’s deep internal belt. Stomach vacuums, RKC planks, and farmer's carries train this muscle to cinch your waist inward 360° even when relaxed.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-[#27272A] text-[11px] font-bold text-[#C8FF00] uppercase">
+            <div className="mt-4 pt-3 border-t border-[#27272A] text-[11px] font-bold text-[#C8FF00] uppercase flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C8FF00]" />
               Fix: Daily Stomach Vacuums &amp; Planks
             </div>
           </div>
 
           {/* Card 3: The V-Taper Optical Illusion */}
-          <div className="bg-[#18181B] border border-[#27272A] p-6 hover:border-[#C8FF00]/60 transition-colors flex flex-col justify-between">
+          <div className="bg-[#18181B]/95 backdrop-blur-sm border border-[#27272A] p-6 hover:border-[#C8FF00] hover:shadow-[0_8px_30px_rgba(200,255,0,0.12)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between rounded-sm relative overflow-hidden group">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#C8FF00]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div>
-              <div className="w-10 h-10 bg-[#0D0D0F] border border-[#27272A] flex items-center justify-center text-[#C8FF00] font-bold text-lg mb-4">
+              <div className="w-10 h-10 bg-[#0D0D0F] border border-[#27272A] flex items-center justify-center text-[#C8FF00] font-bold text-lg mb-4 group-hover:border-[#C8FF00]/40 transition-colors">
                 03
               </div>
               <h3 className="text-xl font-heading text-[#F4F4F5] uppercase mb-2">
@@ -94,15 +99,17 @@ export default function BellyFatGuide() {
                 A 32-inch waist looks wide if your upper back and shoulders are narrow. By building broad latissimus dorsi (lat pulldowns) and rounded side delts, your waist visually appears 2–3 inches smaller immediately due to the classic athletic V-taper.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-[#27272A] text-[11px] font-bold text-[#C8FF00] uppercase">
+            <div className="mt-4 pt-3 border-t border-[#27272A] text-[11px] font-bold text-[#C8FF00] uppercase flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C8FF00]" />
               Fix: Lat Pulldowns &amp; Lateral Raises
             </div>
           </div>
 
           {/* Card 4: Agility & Visceral Fat Oxidation */}
-          <div className="bg-[#18181B] border border-[#27272A] p-6 hover:border-[#C8FF00]/60 transition-colors flex flex-col justify-between">
+          <div className="bg-[#18181B]/95 backdrop-blur-sm border border-[#27272A] p-6 hover:border-[#C8FF00] hover:shadow-[0_8px_30px_rgba(200,255,0,0.12)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between rounded-sm relative overflow-hidden group">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#C8FF00]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div>
-              <div className="w-10 h-10 bg-[#0D0D0F] border border-[#27272A] flex items-center justify-center text-[#C8FF00] font-bold text-lg mb-4">
+              <div className="w-10 h-10 bg-[#0D0D0F] border border-[#27272A] flex items-center justify-center text-[#C8FF00] font-bold text-lg mb-4 group-hover:border-[#C8FF00]/40 transition-colors">
                 04
               </div>
               <h3 className="text-xl font-heading text-[#F4F4F5] uppercase mb-2">
@@ -112,7 +119,8 @@ export default function BellyFatGuide() {
                 Slow boring cardio makes you sluggish. Explosive skater hops, fast-feet sprints, and deceleration drills recruit high-threshold fast-twitch muscle fibers, burning visceral belly fat for up to 24 hours post-workout via high excess post-exercise oxygen consumption.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-[#27272A] text-[11px] font-bold text-[#C8FF00] uppercase">
+            <div className="mt-4 pt-3 border-t border-[#27272A] text-[11px] font-bold text-[#C8FF00] uppercase flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C8FF00]" />
               Fix: Fast-Twitch Plyo Footwork
             </div>
           </div>

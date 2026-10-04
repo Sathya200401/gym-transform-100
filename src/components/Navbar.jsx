@@ -62,7 +62,7 @@ export default function Navbar({
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-1.5 bg-[#141417]/80 p-1 border border-[#27272A] rounded-sm">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -70,14 +70,17 @@ export default function Navbar({
               <button
                 key={item.id}
                 onClick={() => onSelectSection(item.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-heading font-black tracking-wider uppercase transition-colors ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-heading font-black tracking-wider uppercase transition-all duration-200 relative ${
                   isActive
-                    ? 'bg-[#18181B] text-[#C8FF00] border border-[#C8FF00]/40'
-                    : 'text-[#A1A1AA] hover:text-[#F4F4F5] hover:bg-[#18181B]/50'
+                    ? 'bg-[#1F1F24] text-[#C8FF00] border border-[#C8FF00]/50 shadow-[0_0_15px_rgba(200,255,0,0.15)]'
+                    : 'text-[#A1A1AA] hover:text-[#F4F4F5] hover:bg-[#18181B]'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#C8FF00]' : 'text-[#71717A]'}`} />
                 <span>{item.label}</span>
+                {isActive && (
+                  <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-4 h-0.5 bg-[#C8FF00] rounded-full" />
+                )}
               </button>
             );
           })}

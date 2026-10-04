@@ -190,8 +190,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0D0F] text-[#F4F4F5] flex flex-col selection:bg-[#C8FF00] selection:text-[#0D0D0F]">
+    <div className="min-h-screen bg-[#0D0D0F] text-[#F4F4F5] flex flex-col selection:bg-[#C8FF00] selection:text-[#0D0D0F] relative overflow-x-hidden">
       
+      {/* Subtle Ambient Athletic Lighting */}
+      <div className="fixed top-0 left-1/4 w-[600px] h-[600px] bg-[#C8FF00]/[0.025] rounded-full blur-[140px] pointer-events-none -z-0" />
+      <div className="fixed bottom-1/4 right-10 w-[500px] h-[500px] bg-emerald-500/[0.02] rounded-full blur-[160px] pointer-events-none -z-0" />
+
       {/* 1. Header Navigation */}
       <Navbar
         currentDay={state.currentDay}

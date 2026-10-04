@@ -53,6 +53,37 @@ export default function WorkoutPlans({
     }
   };
 
+  const isZeroWeightEx = (ex, item) => {
+    if (activeTab === 'room-agility-core') return true;
+    const exId = ex?.id || item?.exerciseId || '';
+    const bodyweightIds = [
+      'pushup_standard', 'deadbug', 'forearm_plank', 'hanging_knee_raise',
+      'glute_bridge', 'mountain_climber', 'air_squat_reach', 'bear_crawl_hold',
+      'skater_hops', 'fast_feet_shadow'
+    ];
+    if (bodyweightIds.includes(exId)) return true;
+    const equip = (ex?.equipment || '').toLowerCase();
+    const targetW = (item?.targetWeight || '').toLowerCase();
+    return equip.includes('bodyweight') || 
+           equip.includes('zero equipment') || 
+           targetW.includes('bodyweight') ||
+           targetW.includes('speed') ||
+           targetW.includes('hold');
+  };
+
+  const parseDefaultReps = (item) => {
+    if (!item) return '12';
+    const repStr = (item.targetReps || item.reps || '').toString();
+    const match = repStr.match(/\d+/);
+    return match ? match[0] : '12';
+  };
+
+  const isTimeBased = (item) => {
+    if (!item) return false;
+    const str = (item.targetReps || item.reps || '').toString().toLowerCase();
+    return str.includes('sec') || str.includes('hold');
+  };
+
   const handleUpdateStepper = (planId, exIdx, setIdx, field, delta, fallbackVal) => {
     playTick();
     const key = `${planId}_${exIdx}_${setIdx}`;
@@ -77,21 +108,22 @@ export default function WorkoutPlans({
     }));
   };
 
-  const getSetValues = (planId, exIdx, setIdx, exData) => {
+  const getSetValues = (planId, exIdx, setIdx, ex, item) => {
     const key = `${planId}_${exIdx}_${setIdx}`;
     const logged = loggedSets[key];
+    const isBW = isZeroWeightEx(ex, item);
+    const defReps = parseDefaultReps(item);
     if (logged) {
       return {
         checked: logged.checked || false,
-        weight: logged.weight || '10',
-        reps: logged.reps || '12'
+        weight: isBW ? 'BW' : (logged.weight || '10'),
+        reps: logged.reps || defReps
       };
     }
-    // Default starting weights (beginner friendly starting with 2.5kg dumbbells)
     return {
       checked: false,
-      weight: '10',
-      reps: '12'
+      weight: isBW ? 'BW' : '10',
+      reps: defReps
     };
   };
 
@@ -342,17 +374,21 @@ export default function WorkoutPlans({
                       <div className="lg:col-span-5 flex items-start sm:items-center gap-4">
                         <div 
                           onClick={() => onSelectExercise(ex)}
-                          className="w-20 h-20 sm:w-24 sm:h-24 bg-[#0D0D0F] border border-[#27272A] flex-shrink-0 p-2 cursor-pointer group relative overflow-hidden flex items-center justify-center hover:border-[#C8FF00] transition-colors"
-                          title="Click to view technique diagram"
+                          className="w-20 h-20 sm:w-24 sm:h-24 bg-[#0D0D0F] border border-[#27272A] flex-shrink-0 p-1 cursor-pointer group relative overflow-hidden flex items-center justify-center hover:border-[#C8FF00] transition-colors"
+                          title="Click to view HD technique photo"
                         >
                           <img
-                            src={ex.image}
+                            src={ex.image || `assets/exercises/${ex.id}.jpg`}
                             alt={ex.name}
-                            className="w-full h-full object-contain filter brightness-95 group-hover:scale-105 transition-transform duration-200"
+                            className="w-full h-full object-cover rounded-sm filter brightness-95 group-hover:scale-105 transition-transform duration-200"
                             loading="lazy"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `assets/exercises/${ex.id || 'db_flat_bench_press'}.jpg`;
+                            }}
                           />
-                          <span className="absolute bottom-1 right-1 text-[9px] bg-[#C8FF00] text-[#0D0D0F] font-black px-1 uppercase">
-                            VIEW
+                          <span className="absolute bottom-1 right-1 text-[8px] bg-[#C8FF00] text-[#0D0D0F] font-black px-1 uppercase">
+                            HD PHOTO
                           </span>
                         </div>
 
@@ -389,13 +425,15 @@ export default function WorkoutPlans({
                       <div className="lg:col-span-7">
                         <div className="bg-[#0D0D0F] border border-[#27272A] p-3 sm:p-4">
                           <div className="flex items-center justify-between text-[11px] font-bold text-[#A1A1AA] uppercase tracking-wider pb-2 border-b border-[#27272A] mb-3">
-                            <span>Set Breakdown</span>
+                            <span>{isZeroWeightEx(ex, item) ? "Zero-Weights Breakdown (Bodyweight)" : "Set Breakdown (2.5kg Stepper)"}</span>
                             <span className="text-[#C8FF00]">Check = Auto Rest Timer</span>
                           </div>
 
                           <div className="space-y-2">
                             {[...Array(item.targetSets)].map((_, setIdx) => {
-                              const setVal = getSetValues(currentPlan.id, exIdx, setIdx, ex);
+                              const isBW = isZeroWeightEx(ex, item);
+                              const setVal = getSetValues(currentPlan.id, exIdx, setIdx, ex, item);
+                              const isTime = isTimeBased(item);
 
                               return (
                                 <div 
@@ -411,49 +449,58 @@ export default function WorkoutPlans({
                                     SET {setIdx + 1}
                                   </span>
 
-                                  {/* Weight Stepper (2.5kg increments) */}
-                                  <div className="flex items-center gap-1.5">
-                                    <span className="text-[10px] text-[#71717A] uppercase font-bold hidden sm:inline">
-                                      KG
-                                    </span>
-                                    <button
-                                      onClick={() => handleUpdateStepper(currentPlan.id, exIdx, setIdx, 'weight', -2.5, setVal)}
-                                      className="w-7 h-7 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] text-[#F4F4F5] flex items-center justify-center text-xs font-bold"
-                                      title="Subtract 2.5 kg"
-                                    >
-                                      <Minus className="w-3 h-3" />
-                                    </button>
-                                    <span className="w-12 text-center text-xs font-mono font-bold text-[#F4F4F5]">
-                                      {setVal.weight} <span className="text-[10px] text-[#71717A]">kg</span>
-                                    </span>
-                                    <button
-                                      onClick={() => handleUpdateStepper(currentPlan.id, exIdx, setIdx, 'weight', 2.5, setVal)}
-                                      className="w-7 h-7 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] text-[#F4F4F5] flex items-center justify-center text-xs font-bold"
-                                      title="Add 2.5 kg"
-                                    >
-                                      <Plus className="w-3 h-3" />
-                                    </button>
-                                  </div>
+                                  {/* If zero weight, show badge; otherwise KG stepper */}
+                                  {isBW ? (
+                                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#18181B] border border-[#C8FF00]/30 text-[#C8FF00]">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-[#C8FF00] inline-block animate-pulse" />
+                                      <span className="text-[10px] font-black uppercase tracking-wider whitespace-nowrap">
+                                        0 WEIGHTS • BODYWEIGHT
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <div className="flex items-center gap-1.5">
+                                      <span className="text-[10px] text-[#71717A] uppercase font-bold hidden sm:inline">
+                                        KG
+                                      </span>
+                                      <button
+                                        onClick={() => handleUpdateStepper(currentPlan.id, exIdx, setIdx, 'weight', -2.5, setVal)}
+                                        className="w-7 h-7 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] text-[#F4F4F5] flex items-center justify-center text-xs font-bold"
+                                        title="Subtract 2.5 kg"
+                                      >
+                                        <Minus className="w-3 h-3" />
+                                      </button>
+                                      <span className="w-12 text-center text-xs font-mono font-bold text-[#F4F4F5]">
+                                        {setVal.weight} <span className="text-[10px] text-[#71717A]">kg</span>
+                                      </span>
+                                      <button
+                                        onClick={() => handleUpdateStepper(currentPlan.id, exIdx, setIdx, 'weight', 2.5, setVal)}
+                                        className="w-7 h-7 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] text-[#F4F4F5] flex items-center justify-center text-xs font-bold"
+                                        title="Add 2.5 kg"
+                                      >
+                                        <Plus className="w-3 h-3" />
+                                      </button>
+                                    </div>
+                                  )}
 
-                                  {/* Reps Stepper */}
+                                  {/* Reps or Seconds Stepper */}
                                   <div className="flex items-center gap-1.5">
                                     <span className="text-[10px] text-[#71717A] uppercase font-bold hidden sm:inline">
-                                      REPS
+                                      {isTime ? 'SECS' : 'REPS'}
                                     </span>
                                     <button
-                                      onClick={() => handleUpdateStepper(currentPlan.id, exIdx, setIdx, 'reps', -1, setVal)}
+                                      onClick={() => handleUpdateStepper(currentPlan.id, exIdx, setIdx, 'reps', isTime ? -5 : -1, setVal)}
                                       className="w-7 h-7 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] text-[#F4F4F5] flex items-center justify-center text-xs font-bold"
-                                      title="Subtract 1 rep"
+                                      title={isTime ? "Subtract 5 seconds" : "Subtract 1 rep"}
                                     >
                                       <Minus className="w-3 h-3" />
                                     </button>
                                     <span className="w-10 text-center text-xs font-mono font-bold text-[#F4F4F5]">
-                                      {setVal.reps}
+                                      {setVal.reps} <span className="text-[10px] text-[#71717A]">{isTime ? 's' : ''}</span>
                                     </span>
                                     <button
-                                      onClick={() => handleUpdateStepper(currentPlan.id, exIdx, setIdx, 'reps', 1, setVal)}
+                                      onClick={() => handleUpdateStepper(currentPlan.id, exIdx, setIdx, 'reps', isTime ? 5 : 1, setVal)}
                                       className="w-7 h-7 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] text-[#F4F4F5] flex items-center justify-center text-xs font-bold"
-                                      title="Add 1 rep"
+                                      title={isTime ? "Add 5 seconds" : "Add 1 rep"}
                                     >
                                       <Plus className="w-3 h-3" />
                                     </button>

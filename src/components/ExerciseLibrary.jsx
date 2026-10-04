@@ -45,7 +45,7 @@ export default function ExerciseLibrary({ onSelectExercise, soundEnabled }) {
                 VISUAL EXERCISE <span className="text-[#C8FF00]">FORM LIBRARY (30 LIFTS)</span>
               </h2>
               <p className="text-xs sm:text-sm text-[#A1A1AA] max-w-2xl mt-1">
-                Zero trainer guesswork. High-definition vector diagrams, biomechanical cues, and common mistakes to avoid for all 30 exercises in your 100-day split.
+                Zero trainer guesswork. High-definition exercise photographs, biomechanical cues, and common mistakes to avoid for all 30 exercises in your 100-day split.
               </p>
             </div>
 
@@ -80,25 +80,30 @@ export default function ExerciseLibrary({ onSelectExercise, soundEnabled }) {
           </div>
         </div>
 
-        {/* 30 Exercises Grid with SVG diagrams */}
+        {/* 30 Exercises Grid with HD Photos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredExercises.map((ex) => (
             <div
               key={ex.id || ex.name}
               onClick={() => handleCardClick(ex)}
-              className="bg-[#18181B] border border-[#27272A] p-5 cursor-pointer hover:border-[#C8FF00] transition-all duration-200 group flex flex-col justify-between"
+              className="bg-[#18181B]/95 backdrop-blur-sm border border-[#27272A] p-5 cursor-pointer hover:border-[#C8FF00] hover:shadow-[0_4px_20px_rgba(200,255,0,0.12)] transition-all duration-300 group flex flex-col justify-between rounded-sm"
             >
               <div>
-                {/* SVG Artwork container */}
-                <div className="aspect-[16/10] bg-[#0D0D0F] border border-[#27272A] p-4 flex items-center justify-center mb-4 group-hover:border-[#C8FF00]/50 transition-colors relative overflow-hidden">
+                {/* HD Photo container */}
+                <div className="aspect-[16/10] bg-[#0D0D0F] border border-[#27272A] rounded-sm flex items-center justify-center mb-4 group-hover:border-[#C8FF00]/50 transition-colors relative overflow-hidden">
                   <img
-                    src={ex.image}
+                    src={ex.image || `assets/exercises/${ex.id}.jpg`}
                     alt={ex.name}
-                    className="w-full h-full object-contain filter brightness-95 group-hover:scale-105 transition-transform duration-200"
+                    className="w-full h-full object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = `assets/exercises/${ex.id || 'db_flat_bench_press'}.jpg`;
+                    }}
                   />
-                  <span className="absolute bottom-2 right-2 text-[9px] font-black uppercase px-2 py-0.5 bg-[#C8FF00] text-[#0D0D0F]">
-                    INSPECT FORM
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40 group-hover:opacity-10 transition-opacity" />
+                  <span className="absolute bottom-2 right-2 text-[9px] font-black uppercase px-2 py-0.5 bg-[#C8FF00] text-[#0D0D0F] shadow-sm tracking-wider">
+                    INSPECT FORM (HD)
                   </span>
                 </div>
 

@@ -655,13 +655,13 @@ function renderExerciseCards(day) {
       target: "Athletic Conditioning",
       equipment: "Gym Equipment",
       postureBenefit: "Maintains athletic posture.",
-      image: `assets/exercises/${ex.id}.svg`,
+      image: `assets/exercises/.jpg`,
       cues: ["Maintain core brace", "Breathe smoothly"],
       proTip: "Keep good posture and smooth tempo.",
       mistake: "Avoid rushing reps."
     };
 
-    const imageSrc = libEntry.image || `assets/exercises/${ex.id}.svg`;
+    const imageSrc = libEntry.image || `assets/exercises/.jpg`;
 
     const card = document.createElement("div");
     card.className = "exercise-card";
@@ -717,7 +717,7 @@ function renderExerciseCards(day) {
         <!-- Visual Exercise Artwork Image -->
         <div class="exercise-image-wrap" onclick="window.openExerciseModal('${ex.id}')" title="Click to view technique & posture guide">
           <img src="${imageSrc}" alt="${libEntry.name}" loading="lazy" 
-               onerror="this.onerror=null; this.src='assets/exercises/db_flat_bench_press.svg';">
+               onerror="this.onerror=null; this.src='assets/exercises/.jpg';">
           <div class="exercise-image-overlay">
             <span>📖</span> Form Guide
           </div>
@@ -996,14 +996,14 @@ function renderExerciseLibrary() {
   }
 
   filtered.forEach(([id, ex]) => {
-    const imageSrc = ex.image || `assets/exercises/${id}.svg`;
+    const imageSrc = ex.image || `assets/exercises/.jpg`;
     const card = document.createElement("div");
     card.className = "lib-card";
     
     card.innerHTML = `
       <div class="lib-card-img-wrap" onclick="window.openExerciseModal('${id}')" title="View form cues">
         <img src="${imageSrc}" alt="${ex.name}" loading="lazy"
-             onerror="this.onerror=null; this.src='assets/exercises/db_flat_bench_press.svg';">
+             onerror="this.onerror=null; this.src='assets/exercises/.jpg';">
       </div>
       <div class="lib-card-body">
         <div>
@@ -1309,7 +1309,7 @@ window.openExerciseModal = function(exId) {
 
   const modalImg = document.getElementById("modal-exercise-image");
   if (modalImg) {
-    modalImg.src = entry.image || `assets/exercises/${exId}.svg`;
+    modalImg.src = entry.image || `assets/exercises/.jpg`;
   }
 
   const stepList = document.getElementById("modal-step-list");

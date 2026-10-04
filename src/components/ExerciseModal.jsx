@@ -54,6 +54,15 @@ export default function ExerciseModal({ exercise, onClose, soundEnabled }) {
               <span className="text-xs text-[#A1A1AA] font-bold">
                 {exercise.equipment}
               </span>
+              {(exercise.equipment?.toLowerCase().includes('zero equipment') || exercise.equipment?.toLowerCase().includes('bodyweight')) && (
+                <>
+                  <span className="text-xs text-[#71717A]">•</span>
+                  <span className="text-[10px] font-black uppercase px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    🏡 ZERO WEIGHTS REQUIRED
+                  </span>
+                </>
+              )}
             </div>
             <h3 className="text-2xl sm:text-3xl font-heading text-[#F4F4F5] uppercase tracking-wide">
               {exercise.name}
@@ -72,15 +81,24 @@ export default function ExerciseModal({ exercise, onClose, soundEnabled }) {
         {/* Content Body */}
         <div className="space-y-6 max-h-[70vh] overflow-y-auto pr-2 scrollbar-thin">
           
-          {/* High Resolution Vector Exercise Artwork */}
-          <div className="aspect-[16/10] bg-[#0D0D0F] border border-[#27272A] p-6 flex items-center justify-center relative overflow-hidden">
+          {/* High-Definition Photographic Form Display */}
+          <div className="aspect-[16/10] bg-[#0D0D0F] border border-[#27272A] rounded-sm flex items-center justify-center relative overflow-hidden group shadow-2xl">
             <img
-              src={exercise.image}
+              src={exercise.image || `assets/exercises/${exercise.id}.jpg`}
               alt={exercise.name}
-              className="w-full h-full object-contain filter brightness-95"
+              className="w-full h-full object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-500"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = `assets/exercises/${exercise.id || 'db_flat_bench_press'}.jpg`;
+              }}
             />
-            <div className="absolute top-3 left-3 text-[10px] font-mono text-[#71717A] uppercase">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
+            <div className="absolute top-3 left-3 bg-[#0D0D0F]/90 backdrop-blur-md px-3 py-1.5 border border-[#27272A] text-[10px] font-mono text-[#A1A1AA] uppercase flex items-center gap-1.5 shadow-lg">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C8FF00]" />
               Target: <strong className="text-[#F4F4F5]">{exercise.target}</strong>
+            </div>
+            <div className="absolute bottom-3 right-3 bg-[#C8FF00] text-[#0D0D0F] text-[10px] font-black uppercase px-2.5 py-1 shadow-lg tracking-wider flex items-center gap-1">
+              <span>HD TECHNIQUE PHOTO</span>
             </div>
           </div>
 

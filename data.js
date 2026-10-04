@@ -97,7 +97,7 @@ const NUTRITION_DATA = {
 const EXERCISE_LIBRARY = {
   // PUSH / CHEST & SHOULDERS
   "db_flat_bench_press": {
-    image: "assets/exercises/db_flat_bench_press.svg",
+    image: "assets/exercises/db_flat_bench_press.jpg",
     name: "Dumbbell Flat Bench Press",
     category: "Chest",
     equipment: "Dumbbells, Flat Bench",
@@ -114,7 +114,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Flaring elbows straight out at 90°, which impinges the rotator cuff and strains shoulders."
   },
   "db_incline_bench_press": {
-    image: "assets/exercises/db_incline_bench_press.svg",
+    image: "assets/exercises/db_incline_bench_press.jpg",
     name: "Dumbbell Incline Bench Press",
     category: "Chest",
     equipment: "Dumbbells, Incline Bench (30-45°)",
@@ -131,7 +131,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Bouncing weights or arching lower back excessively off the incline seat."
   },
   "cable_chest_fly": {
-    image: "assets/exercises/cable_chest_fly.svg",
+    image: "assets/exercises/cable_chest_fly.jpg",
     name: "Cable Standing Chest Fly",
     category: "Chest",
     equipment: "Cable Crossover Tower",
@@ -148,7 +148,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Bending and straightening elbows like a press instead of keeping arms in a locked fly arc."
   },
   "db_seated_shoulder_press": {
-    image: "assets/exercises/db_seated_shoulder_press.svg",
+    image: "assets/exercises/db_seated_shoulder_press.jpg",
     name: "Dumbbell Seated Shoulder Press",
     category: "Shoulders",
     equipment: "Dumbbells, Adjustable Bench (75-85°)",
@@ -165,7 +165,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Over-arching the lower back to turn it into an incline chest press."
   },
   "db_lateral_raise": {
-    image: "assets/exercises/db_lateral_raise.svg",
+    image: "assets/exercises/db_lateral_raise.jpg",
     name: "Dumbbell Lateral Raise",
     category: "Shoulders",
     equipment: "Light Dumbbells",
@@ -182,7 +182,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Shrugging the neck and traps up to yank heavy weights."
   },
   "cable_face_pull": {
-    image: "assets/exercises/cable_face_pull.svg",
+    image: "assets/exercises/cable_face_pull.jpg",
     name: "Cable Face Pull (Crucial Posture Fix)",
     category: "Back / Shoulders",
     equipment: "Cable Machine, Rope Attachment",
@@ -199,7 +199,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Pulling down to the chin with elbows low, missing the external rotation."
   },
   "cable_tricep_pushdown": {
-    image: "assets/exercises/cable_tricep_pushdown.svg",
+    image: "assets/exercises/cable_tricep_pushdown.jpg",
     name: "Cable Tricep Pushdown",
     category: "Arms",
     equipment: "Cable Machine, Rope or Straight Bar",
@@ -216,7 +216,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Swinging elbows back and forth and using bodyweight momentum."
   },
   "db_overhead_tricep_extension": {
-    image: "assets/exercises/db_overhead_tricep_extension.svg",
+    image: "assets/exercises/db_overhead_tricep_extension.jpg",
     name: "Dumbbell Overhead Tricep Extension",
     category: "Arms",
     equipment: "Single Dumbbell, Bench",
@@ -235,7 +235,7 @@ const EXERCISE_LIBRARY = {
 
   // PULL / BACK & BICEPS
   "lat_pulldown": {
-    image: "assets/exercises/lat_pulldown.svg",
+    image: "assets/exercises/lat_pulldown.jpg",
     name: "Wide-Grip Lat Pulldown",
     category: "Back",
     equipment: "Lat Pulldown Machine",
@@ -252,7 +252,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Swinging torso backward drastically to yank heavy weight down."
   },
   "seated_cable_row": {
-    image: "assets/exercises/seated_cable_row.svg",
+    image: "assets/exercises/seated_cable_row.jpg",
     name: "Seated Cable Row (Close-Grip)",
     category: "Back",
     equipment: "Low Cable Row Station, V-Bar",
@@ -269,7 +269,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Leaning way forward and rounding the lower back under tension."
   },
   "db_single_arm_row": {
-    image: "assets/exercises/db_single_arm_row.svg",
+    image: "assets/exercises/db_single_arm_row.jpg",
     name: "Dumbbell Single-Arm Row",
     category: "Back",
     equipment: "Dumbbell, Flat Bench",
@@ -286,7 +286,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Twisting the torso wildly at the top to cheat the weight up."
   },
   "db_bicep_curl": {
-    image: "assets/exercises/db_bicep_curl.svg",
+    image: "assets/exercises/db_bicep_curl.jpg",
     name: "Dumbbell Incline or Standing Bicep Curl",
     category: "Arms",
     equipment: "Dumbbells",
@@ -303,7 +303,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Swinging hips and shoulders to launch weights."
   },
   "hammer_curl": {
-    image: "assets/exercises/hammer_curl.svg",
+    image: "assets/exercises/hammer_curl.jpg",
     name: "Dumbbell Hammer Curl",
     category: "Arms",
     equipment: "Dumbbells",
@@ -321,7 +321,7 @@ const EXERCISE_LIBRARY = {
 
   // LEGS / POSTURE & LOWER BODY
   "goblet_squat": {
-    image: "assets/exercises/goblet_squat.svg",
+    image: "assets/exercises/goblet_squat.jpg",
     name: "Dumbbell Goblet Squat",
     category: "Legs",
     equipment: "Single Dumbbell",
@@ -338,7 +338,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Letting heels peel off floor or collapsing chest forward."
   },
   "db_romanian_deadlift": {
-    image: "assets/exercises/db_romanian_deadlift.svg",
+    image: "assets/exercises/db_romanian_deadlift.jpg",
     name: "Dumbbell Romanian Deadlift (RDL)",
     category: "Legs / Posture",
     equipment: "Dumbbells",
@@ -356,7 +356,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Rounding the lower back or squatting down with the knees."
   },
   "leg_press": {
-    image: "assets/exercises/leg_press.svg",
+    image: "assets/exercises/leg_press.jpg",
     name: "Leg Press (Machine)",
     category: "Legs",
     equipment: "Leg Press Machine",
@@ -373,7 +373,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Hyperextending and violently snapping knees straight at top."
   },
   "walking_lunges": {
-    image: "assets/exercises/walking_lunges.svg",
+    image: "assets/exercises/walking_lunges.jpg",
     name: "Walking Dumbbell Lunges",
     category: "Legs / Agility",
     equipment: "Bodyweight or Light Dumbbells",
@@ -390,7 +390,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Letting front knee slam inward or torso lean lazily onto front thigh."
   },
   "standing_calf_raise": {
-    image: "assets/exercises/standing_calf_raise.svg",
+    image: "assets/exercises/standing_calf_raise.jpg",
     name: "Standing Dumbbell / Machine Calf Raise",
     category: "Legs",
     equipment: "Dumbbells or Machine, Step Platform",
@@ -408,7 +408,7 @@ const EXERCISE_LIBRARY = {
 
   // CORE & BELLY-FAT CINCHING
   "deadbug": {
-    image: "assets/exercises/deadbug.svg",
+    image: "assets/exercises/deadbug.jpg",
     name: "Deadbug (Transverse Abdominis Activator)",
     category: "Core",
     equipment: "Bodyweight / Mat",
@@ -425,7 +425,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Allowing lower back to arch off the floor, which disengages core and strains spine."
   },
   "forearm_plank": {
-    image: "assets/exercises/forearm_plank.svg",
+    image: "assets/exercises/forearm_plank.jpg",
     name: "Active Forearm Plank",
     category: "Core",
     equipment: "Bodyweight / Mat",
@@ -442,7 +442,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Sagging lower back or hiking hips in a triangle."
   },
   "hanging_knee_raise": {
-    image: "assets/exercises/hanging_knee_raise.svg",
+    image: "assets/exercises/hanging_knee_raise.jpg",
     name: "Captain's Chair / Hanging Knee Raise",
     category: "Core",
     equipment: "Captain's Chair or Pull-up Bar",
@@ -459,7 +459,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Using pendulum momentum to swing legs up."
   },
   "cable_woodchopper": {
-    image: "assets/exercises/cable_woodchopper.svg",
+    image: "assets/exercises/cable_woodchopper.jpg",
     name: "Cable Rotational Woodchopper",
     category: "Core / Agility",
     equipment: "Cable Machine, D-Handle",
@@ -476,7 +476,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Bending arms and pulling like a row."
   },
   "farmers_walk": {
-    image: "assets/exercises/farmers_walk.svg",
+    image: "assets/exercises/farmers_walk.jpg",
     name: "Dumbbell Farmer's Walk",
     category: "Full Body / Core / Agility",
     equipment: "Pair of Moderate/Heavy Dumbbells",
@@ -495,7 +495,7 @@ const EXERCISE_LIBRARY = {
 
   // AGILITY & ROOM (NO-EQUIPMENT) DRILLS
   "skater_hops": {
-    image: "assets/exercises/skater_hops.svg",
+    image: "assets/exercises/skater_hops.jpg",
     name: "Lateral Skater Hops (Agility & Glute Burn)",
     category: "Agility / Home",
     equipment: "Zero Equipment (Room)",
@@ -512,7 +512,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Stiff-legged heavy landings."
   },
   "fast_feet_shadow": {
-    image: "assets/exercises/fast_feet_shadow.svg",
+    image: "assets/exercises/fast_feet_shadow.jpg",
     name: "Fast-Feet Agility Drills (Room Speed Ladder)",
     category: "Agility / Home",
     equipment: "Zero Equipment (Room)",
@@ -529,7 +529,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Landing flat-footed on heels."
   },
   "pushup_standard": {
-    image: "assets/exercises/pushup_standard.svg",
+    image: "assets/exercises/pushup_standard.jpg",
     name: "Standard Push-Up (or Incline Desk Push-Up)",
     category: "Chest / Core / Home",
     equipment: "Zero Equipment (Room/Bed/Desk)",
@@ -546,7 +546,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Sagging hips or poking neck down toward floor."
   },
   "glute_bridge": {
-    image: "assets/exercises/glute_bridge.svg",
+    image: "assets/exercises/glute_bridge.jpg",
     name: "Glute Bridge & Hold",
     category: "Glutes / Posture / Home",
     equipment: "Zero Equipment (Room)",
@@ -563,7 +563,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Hyperextending the lower back instead of hinging from hips."
   },
   "mountain_climber": {
-    image: "assets/exercises/mountain_climber.svg",
+    image: "assets/exercises/mountain_climber.jpg",
     name: "Athletic Mountain Climbers",
     category: "Core / Agility / Home",
     equipment: "Zero Equipment (Room)",
@@ -580,7 +580,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Hips floating up in a pike."
   },
   "air_squat_reach": {
-    image: "assets/exercises/air_squat_reach.svg",
+    image: "assets/exercises/air_squat_reach.jpg",
     name: "Bodyweight Squat to Overhead Reach",
     category: "Legs / Posture / Home",
     equipment: "Zero Equipment (Room)",
@@ -597,7 +597,7 @@ const EXERCISE_LIBRARY = {
     mistake: "Rounding shoulders forward."
   },
   "bear_crawl_hold": {
-    image: "assets/exercises/bear_crawl_hold.svg",
+    image: "assets/exercises/bear_crawl_hold.jpg",
     name: "Bear Crawl Hover & Hold",
     category: "Core / Agility / Home",
     equipment: "Zero Equipment (Room)",
@@ -616,6 +616,12 @@ const EXERCISE_LIBRARY = {
 };
 
 // 7-Day Weekly Template generator for 100 Days across 3 Phases
+// Ensure all 30 exercise entries have id and valid image path
+Object.keys(EXERCISE_LIBRARY).forEach(k => {
+  EXERCISE_LIBRARY[k].id = k;
+  EXERCISE_LIBRARY[k].image = `assets/exercises/${k}.jpg`;
+});
+
 function generate100Days() {
   const days = [];
   
@@ -641,8 +647,8 @@ function generate100Days() {
         dayName: "Monday",
         type: "gym",
         title: phase === 1 
-          ? "Upper Push, Shoulder Posture & Footwork" 
-          : (phase === 2 ? "Chest & Shoulder V-Taper Hypertrophy" : "High-Density Push & Agility Intervals"),
+          ? "Dedicated Chest & Upper Push (Flat & Incline DB Press)" 
+          : (phase === 2 ? "Chest Hypertrophy & Shoulder Caps" : "High-Density Chest & Push Conditioning"),
         focus: "Chest, Shoulders, Triceps, Rotator Cuffs, Footwork",
         duration: "65-75 min",
         postureTip: "Retract scapulae: pull your shoulder blades down and back as if sliding them into your back jeans pockets.",
@@ -698,13 +704,13 @@ function generate100Days() {
           { name: "Cross-Body Shoulder Stretch", reps: "30s each side" }
         ],
         roomRoutine: {
-          title: "Alternative Room Routine: Upper Push & Speed",
+          title: "Alternative Room Routine: Upper Push & Speed (Zero Equipment)",
           duration: "35 mins",
           exercises: [
-            { id: "pushup_standard", sets: 4, reps: "10-15 reps", rest: 45 },
-            { id: "fast_feet_shadow", sets: 4, reps: "40 secs", rest: 30 },
-            { id: "deadbug", sets: 3, reps: "12 reps/side", rest: 30 },
-            { id: "forearm_plank", sets: 3, reps: "45 sec hold", rest: 30 }
+            { id: "pushup_standard", sets: 4, reps: "10-15 reps", rest: 45, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "fast_feet_shadow", sets: 4, reps: "40 secs", rest: 30, targetWeight: "Bodyweight / Speed (Zero Weights Required)" },
+            { id: "deadbug", sets: 3, reps: "12 reps/side", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "forearm_plank", sets: 3, reps: "45 sec hold", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" }
           ]
         }
       };
@@ -777,13 +783,13 @@ function generate100Days() {
           { name: "Cobra / Sphinx Abdominal Stretch", reps: "30 seconds" }
         ],
         roomRoutine: {
-          title: "Alternative Room Routine: Posture Pull & Core Cinch",
+          title: "Alternative Room Routine: Posture Pull & Core Cinch (Zero Equipment)",
           duration: "35 mins",
           exercises: [
-            { id: "deadbug", sets: 4, reps: "12 reps/side", rest: 30 },
-            { id: "bear_crawl_hold", sets: 4, reps: "35 sec hold", rest: 30 },
-            { id: "glute_bridge", sets: 3, reps: "15 reps with 2s squeeze", rest: 30 },
-            { id: "skater_hops", sets: 3, reps: "45 secs", rest: 30 }
+            { id: "deadbug", sets: 4, reps: "12 reps/side", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "bear_crawl_hold", sets: 4, reps: "35 sec hold", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "glute_bridge", sets: 3, reps: "15 reps with 2s squeeze", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "skater_hops", sets: 3, reps: "45 secs", rest: 30, targetWeight: "Bodyweight / Speed (Zero Weights Required)" }
           ]
         }
       };
@@ -856,19 +862,19 @@ function generate100Days() {
           { name: "Standing Quad & Hamstring Stretch", reps: "30s each" }
         ],
         roomRoutine: {
-          title: "Alternative Room Routine: Legs & Hip Mobility",
+          title: "Alternative Room Routine: Legs & Hip Mobility (Zero Equipment)",
           duration: "35 mins",
           exercises: [
-            { id: "air_squat_reach", sets: 4, reps: "15 reps", rest: 30 },
-            { id: "glute_bridge", sets: 4, reps: "15 reps", rest: 30 },
-            { id: "skater_hops", sets: 4, reps: "40 secs", rest: 30 },
-            { id: "bear_crawl_hold", sets: 3, reps: "30 sec hold", rest: 30 }
+            { id: "air_squat_reach", sets: 4, reps: "15 reps", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "glute_bridge", sets: 4, reps: "15 reps", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "skater_hops", sets: 4, reps: "40 secs", rest: 30, targetWeight: "Bodyweight / Agility (Zero Weights Required)" },
+            { id: "bear_crawl_hold", sets: 3, reps: "30 sec hold", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" }
           ]
         }
       };
     }
 
-    // Thursday (Gym) - Shoulders, Upper Back & Deep Core (V-Taper Focus)
+    // Thursday (Gym) - Dedicated Upper Body Hypertrophy & Core (Chest, Back, Delts & Arms)
     else if (dayOfWeekNum === 3) {
       dayData = {
         day: d,
@@ -878,9 +884,9 @@ function generate100Days() {
         dayName: "Thursday",
         type: "gym",
         title: phase === 1 
-          ? "Shoulder Sculpt, Scapular Control & Plank" 
-          : (phase === 2 ? "3D Shoulder Caps & Upper Back Thickness" : "Delts, Traps & Core Tightening"),
-        focus: "Lateral Delts, Anterior Delts, Mid Traps, Deep Plank",
+          ? "Upper Body Hypertrophy, Chest Fly & Core" 
+          : (phase === 2 ? "Complete Upper Body Density & V-Taper" : "Peak Upper Body Athletic Sculpt"),
+        focus: "Chest, Lats, Deltoids, Scapular Posture, Transverse Core",
         duration: "60-70 min",
         postureTip: "Keep your neck relaxed when doing lateral raises. Don't shrug your traps into your ears.",
         warmup: [
@@ -904,18 +910,18 @@ function generate100Days() {
             targetWeight: "10 - 14 kg DB"
           },
           {
+            id: "cable_chest_fly",
+            sets: 3,
+            reps: "12",
+            rest: 45,
+            targetWeight: "7.5 - 12.5 kg"
+          },
+          {
             id: "db_lateral_raise",
-            sets: 4,
+            sets: 3,
             reps: "12-15",
             rest: 45,
             targetWeight: "4 - 6 kg DBs (Smooth control)"
-          },
-          {
-            id: "cable_face_pull",
-            sets: 3,
-            reps: "15",
-            rest: 45,
-            targetWeight: "10 - 15 kg"
           },
           {
             id: "forearm_plank",
@@ -935,13 +941,13 @@ function generate100Days() {
           { name: "Upper Back Thread-the-Needle", reps: "30s each side" }
         ],
         roomRoutine: {
-          title: "Alternative Room Routine: Shoulder & Core Conditioning",
+          title: "Alternative Room Routine: Shoulder & Core Conditioning (Zero Equipment)",
           duration: "30 mins",
           exercises: [
-            { id: "pushup_standard", sets: 3, reps: "12 reps", rest: 45 },
-            { id: "forearm_plank", sets: 4, reps: "40 sec active hold", rest: 30 },
-            { id: "fast_feet_shadow", sets: 3, reps: "45 secs", rest: 30 },
-            { id: "mountain_climber", sets: 3, reps: "30 secs", rest: 30 }
+            { id: "pushup_standard", sets: 3, reps: "12 reps", rest: 45, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "forearm_plank", sets: 4, reps: "40 sec active hold", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "fast_feet_shadow", sets: 3, reps: "45 secs", rest: 30, targetWeight: "Bodyweight / Speed (Zero Weights Required)" },
+            { id: "mountain_climber", sets: 3, reps: "30 secs", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" }
           ]
         }
       };
@@ -976,11 +982,11 @@ function generate100Days() {
             targetWeight: "12 - 16 kg DB in each hand"
           },
           {
-            id: "cable_chest_fly",
+            id: "pushup_standard",
             sets: 3,
-            reps: "12",
+            reps: "12-15 reps (elevate hands if needed)",
             rest: 45,
-            targetWeight: "7.5 - 12.5 kg"
+            targetWeight: "Bodyweight"
           },
           {
             id: "hammer_curl",
@@ -1014,13 +1020,13 @@ function generate100Days() {
           { name: "Seated Butterfly Groin Stretch", reps: "45 seconds" }
         ],
         roomRoutine: {
-          title: "Alternative Room Routine: Full-Body HIIT Burn",
+          title: "Alternative Room Routine: Full-Body HIIT Burn (Zero Equipment)",
           duration: "35 mins",
           exercises: [
-            { id: "skater_hops", sets: 4, reps: "45 secs", rest: 30 },
-            { id: "pushup_standard", sets: 3, reps: "12 reps", rest: 30 },
-            { id: "mountain_climber", sets: 3, reps: "35 secs", rest: 30 },
-            { id: "deadbug", sets: 3, reps: "10 reps/side", rest: 30 }
+            { id: "skater_hops", sets: 4, reps: "45 secs", rest: 30, targetWeight: "Bodyweight / Agility (Zero Weights Required)" },
+            { id: "pushup_standard", sets: 3, reps: "12 reps", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "mountain_climber", sets: 3, reps: "35 secs", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" },
+            { id: "deadbug", sets: 3, reps: "10 reps/side", rest: 30, targetWeight: "Bodyweight (Zero Weights Required)" }
           ]
         }
       };
